@@ -74,6 +74,14 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Search" {
+            let movieSerieDetailViewController = segue.destination as! MovieSerieDetailViewController
+            let index = tableView.indexPathForSelectedRow!.row
+            movieSerieDetailViewController.movieSerie = movieSeries[index]
+        }
+ 
+    }
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -113,12 +121,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         
         
         return cell
-    }
-    
-    private func configure(_ cell: UITableViewCell, forItemAt indexPath : IndexPath){
-        let movieSerie = movieSeries[indexPath.row]
-        cell.textLabel?.text = movieSerie.title
-        cell.detailTextLabel?.text = movieSerie.year
     }
 
     
