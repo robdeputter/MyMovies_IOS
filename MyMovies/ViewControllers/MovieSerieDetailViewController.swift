@@ -38,6 +38,7 @@ class MovieSerieDetailViewController: UIViewController {
             guard let movieSerieDetail = result else {return}
             
             var url = URL(string: movieSerieDetail.posterString)
+            self.movieSerieDetail = movieSerieDetail
             NetworkController.shared.fetchImage(with: movieSerieDetail.poster!){
             image in
                 guard let image = image else {return}
@@ -47,6 +48,8 @@ class MovieSerieDetailViewController: UIViewController {
                     self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
                 }
             }
+            
+            self.setUpButtons()
         
             
         }
@@ -55,6 +58,34 @@ class MovieSerieDetailViewController: UIViewController {
         
         
         // Do any additional setup after loading the view.
+    }
+    func setUpButtons(){
+        DatabaseController.shared.inFavorites(movieSerieDetail: self.movieSerieDetail){
+            result in
+            DispatchQueue.main.async {
+                if(result){
+                    self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
+                }
+                else{
+                    self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_border_white_18dp"), for: .normal)
+                }
+            }
+            
+        }
+        
+        DatabaseController.shared.inWatchlist(movieSerieDetail: self.movieSerieDetail){
+            result in
+            DispatchQueue.main.async {
+                if(result){
+                    self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_check_white_18dp"), for: .normal)
+                }
+                else{
+                    self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_white_18dp"), for: .normal)
+                }
+            }
+            
+        }
+            
     }
     
     private func updateUI(movieSerieDetail : MovieSerieDetail, image : UIImage){
@@ -70,11 +101,70 @@ class MovieSerieDetailViewController: UIViewController {
     }
     
     @IBAction func watchlistButtonPressed(_ sender: UIButton) {
-        
+        DatabaseController.shared.inWatchlist(movieSerieDetail: self.movieSerieDetail){
+            result in
+            if(result){
+                
+                DatabaseController.shared.removeWatchListEntity(movieSerieDetail: self.movieSerieDetail){
+                    result in
+                    if(result != nil){
+                        //show error
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_white_18dp"), for: .normal)
+                        }
+                        
+                    }
+
+                }
+            }else{
+                DatabaseController.shared.addWatchListEntity(movieSerieDetail: self.movieSerieDetail){
+                    response in
+                    if(response != nil){
+                        //show error
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_check_white_18dp"), for: .normal)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
-        favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
+        DatabaseController.shared.inFavorites(movieSerieDetail: self.movieSerieDetail){
+            result in
+            if(result){
+                DatabaseController.shared.removeFavorite(movieSerieDetail: self.movieSerieDetail){
+                    result in
+                    if(result != nil){
+                        //show error
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_border_white_18dp"), for: .normal)
+                        }
+                        
+                    }
+
+                }
+            }else{
+                DatabaseController.shared.addFavorite(movieSerieDetail: self.movieSerieDetail,rating: 3){
+                    response in
+                    if(response != nil){
+                        //show error
+                    }
+                    else{
+                        DispatchQueue.main.async {
+                            self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     /*
