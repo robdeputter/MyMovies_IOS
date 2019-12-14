@@ -17,9 +17,8 @@ import RealmSwift
 class DatabaseController{
     
     static let shared = DatabaseController()
-    //SOURCE: https://realm.io/docs/swift/latest/
-    var favorites : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchlist == false")
-    var watchlistEntities : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchlist == true")
+    var favorites : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList == false")
+    var watchlistEntities : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList == true")
     
     func addFavorite(movieSerieDetail : MovieSerieDetail, rating : Int, completion: @escaping(Error?) -> Void){
         do{
@@ -36,6 +35,7 @@ class DatabaseController{
                     realm.add(movieSerieDetail)
                 }
             }
+            completion(nil)
         }catch let error as NSError{
             completion(error)
         }
@@ -57,9 +57,11 @@ class DatabaseController{
                     realm.add(movieSerieDetail)
                 }
             }
+            completion(nil)
         }catch let error as NSError{
             completion(error)
         }
+        
     }
     
     func inWatchlist(movieSerieDetail : MovieSerieDetail, completion: @escaping(Bool) -> Void){
@@ -86,8 +88,6 @@ class DatabaseController{
                 completion(false)
                 return
             }
-            
-            //if inWatchlist => false ==> false
             completion(movieSerieDb.favoriteRating.value == nil)
         }
     }
