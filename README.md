@@ -11,13 +11,13 @@ If you like to let your friends know about a movie or series that you liked very
 ## External frameworks
 [Realm](https://realm.io) 
 
-## Installing proces
-### Clone this repository
+## Installing
+### 1. Clone this repository
 ```bash
 git clone https://github.com/robdeputter/MyMovies_IOS.git
 ```
 
-### Install pods
+### 2. Install pods
 ```bash
 $ pod install
 ```
