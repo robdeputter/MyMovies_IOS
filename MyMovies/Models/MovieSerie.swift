@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class MovieSerie : Decodable{
     var imdbID : String
     var title : String

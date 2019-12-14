@@ -3,18 +3,21 @@
 
 target 'MyMovies' do
   # Comment the next line if you don't want to use dynamic frameworks
-  use_frameworks!
+ 
+	workspace 'MyMovies'
 
   # Pods for MyMovies
-	pod 'Realm'
+	use_frameworks!
 	pod 'RealmSwift'
 
   target 'MyMoviesTests' do
+	use_frameworks!
     inherit! :search_paths
-    # Pods for testing
+    # Pods for testing	
   end
 
   target 'MyMoviesUITests' do
+use_frameworks!
     # Pods for testing
   end
 
