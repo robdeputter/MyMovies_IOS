@@ -19,5 +19,5 @@ git clone https://github.com/robdeputter/MyMovies_IOS.git
 
 ### Install pods
 ```bash
-$ install pod
+$ pod install
 ```
