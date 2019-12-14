@@ -13,10 +13,11 @@ If you like to let your friends know about a movie or series that you liked very
 
 ## Installing proces
 ### Clone this repository
-`console
+```bash
 git clone https://github.com/robdeputter/MyMovies_IOS.git
-`
+```
 
 ### Install pods
-`console
+```bash
 $ install pod
+```
