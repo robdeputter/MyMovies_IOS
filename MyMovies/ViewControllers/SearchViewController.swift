@@ -22,6 +22,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setSearchbarInNavbar()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -29,15 +30,54 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
-    func updateSearchResults(for searchController: UISearchController) {
+    func setSearchbarInNavbar(){
+        let searchController = UISearchController(searchResultsController: nil)
         
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        
+        self.definesPresentationContext = true
+        
+        navigationItem.searchController = searchController
+        
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let inputText = searchController.searchBar.text{
+            
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
+            guard !inputText.isEmpty else{
+                self.movieSeries.removeAll()
+                self.tableView.reloadData()
+                return
+            }
+            
+            NetworkController.shared.fetchSearchMovieSeries(with: inputText, with: "", with: ""){
+                (results) in
+                guard let movieSeries = results else {
+                    return
+                }
+                
+                self.movieSeries = movieSeries
+                
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                    
+                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                }
+                
+            }
+            
+        }
     }
     
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -47,7 +87,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         //SOURCE: https://medium.com/@mtssonmez/handle-empty-tableview-in-swift-4-ios-11-23635d108409
         
         if movieSeries.count == 0{
-            self.tableView.setEmptyView(message: "No searchresults")
+            self.tableView.setEmptyView(message: "No results")
         }
         else{
             self.tableView.restore()

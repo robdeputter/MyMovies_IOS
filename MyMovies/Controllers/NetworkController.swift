@@ -10,7 +10,7 @@
  import UIKit
  
  class NetworkController{
-    static let instance : NetworkController = NetworkController()
+    static let shared : NetworkController = NetworkController()
     
     let baseURLimdb = URL(string: "https://movie-database-imdb-alternative.p.rapidapi.com")!
     let baseURLunogs = URL(string: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi/")!
