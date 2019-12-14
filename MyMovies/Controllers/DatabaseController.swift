@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-//SOURCE: https://realm.io/docs/swift/latest
+//info: https://realm.io/docs/swift/latest
 /**
  DatabaseController is the main controller for data manipulation of the favorites and watchlist
  --> All set in 1 controller = clear
@@ -17,8 +17,8 @@ import RealmSwift
 class DatabaseController{
     static let shared = DatabaseController()
     
-    //var favorites : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList == false")
-    //var watchlistEntities : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList == true")
+    var favorites : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList == false")
+    var watchlistEntities : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList == true")
     
     //Add methods
     func addFavorite(movieSerieDetail : MovieSerieDetail, rating : Int, completion: @escaping(Error?) -> Void){
@@ -32,7 +32,7 @@ class DatabaseController{
                 }
                 else{
                     movieSerieDetail.favoriteRating.value = rating
-                    //source: https://academy.realm.io/posts/realm-primary-keys-tutorial/
+                    //info: https://academy.realm.io/posts/realm-primary-keys-tutorial/
                     realm.add(movieSerieDetail)
                 }
             }
@@ -54,7 +54,7 @@ class DatabaseController{
                 }
                 else{
                     movieSerieDetail.inWatchList = true
-                    //source: https://academy.realm.io/posts/realm-primary-keys-tutorial/
+                    //info: https://academy.realm.io/posts/realm-primary-keys-tutorial/
                     realm.add(movieSerieDetail)
                 }
             }
