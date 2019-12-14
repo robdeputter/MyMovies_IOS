@@ -96,15 +96,23 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         return movieSeries.count
     }
     
-    /*
-     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-     let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-     
-     // Configure the cell...
-     
-     return cell
-     }
-     */
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMovieSerieCell", for: indexPath)
+        
+        // Configure the cell...
+        configure(cell, forItemAt: indexPath)
+        
+        return cell
+    }
+    
+    private func configure(_ cell: UITableViewCell, forItemAt indexPath : IndexPath){
+        let movieSerie = movieSeries[indexPath.row]
+        cell.textLabel?.text = movieSerie.title
+        cell.detailTextLabel?.text = movieSerie.year
+    }
+
+    
     
     /*
      // Override to support conditional editing of the table view.
