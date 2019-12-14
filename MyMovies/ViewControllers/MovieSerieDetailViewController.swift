@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MovieSerieDetailViewController: UIViewController {
-    
+    var movieSerieDetail : MovieSerieDetail!
     var movieSerie : MovieSerie!
+    
     //image
     @IBOutlet var poster: UIImageView!
     
@@ -28,15 +30,18 @@ class MovieSerieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
             result in
             guard let movieSerieDetail = result else {return}
             
-            NetworkController.shared.fetchImage(with: movieSerieDetail.poster){
+            var url = URL(string: movieSerieDetail.posterString)
+            NetworkController.shared.fetchImage(with: movieSerieDetail.poster!){
             image in
                 guard let image = image else {return}
+                
                 
                 DispatchQueue.main.async {
                     self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
@@ -60,11 +65,14 @@ class MovieSerieDetailViewController: UIViewController {
         releasedDetails.text = "Released: \(movieSerieDetail.released)"
         genreDetails.text = "Genre: \(movieSerieDetail.genre)"
         poster.image = image
+        
+        
     }
     
     @IBAction func watchlistButtonPressed(_ sender: UIButton) {
         
     }
+    
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
         favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
     }

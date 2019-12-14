@@ -7,21 +7,25 @@
 //
 
 import Foundation
+import RealmSwift
+//SOURCE: https://realm.io/docs/swift/latest
 
-
-class MovieSerieDetail : Decodable{
-    var imdbID : String
-    var title : String
-    var year : String
-    var type : String
-    var poster : URL
-    var released : String
-    var runTime : String?
-    var genre : String
-    var actors : String
-    var imdbRating : String
-    var imdbVotes : String
-    var plot : String?
+class MovieSerieDetail : Object, Decodable{
+    @objc dynamic var imdbID : String = ""
+    @objc dynamic var title : String = ""
+    @objc dynamic var year : String = ""
+    @objc dynamic var type : String = ""
+    @objc dynamic var posterString : String = ""
+    @objc dynamic var released : String = ""
+    @objc dynamic var runTime : String? = ""
+    @objc dynamic var genre : String = ""
+    @objc dynamic var actors : String = ""
+    @objc dynamic var imdbRating : String = ""
+    @objc dynamic var imdbVotes : String = ""
+    @objc dynamic var plot : String?
+    var favoriteRating : RealmOptional<Int> = RealmOptional<Int>()
+    @objc dynamic var inWatchList : Bool = false
+    var poster : URL?
     
     enum CodingKeys : String , CodingKey{
         case imdbID
@@ -37,6 +41,13 @@ class MovieSerieDetail : Decodable{
         case imdbVotes
         case plot = "Plot"
     }
+    override class func primaryKey() -> String? {
+        return "imdbID"
+    }
+    
+    required init() {
+        super.init()
+    }
     
     required init(from decoder: Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
@@ -46,6 +57,7 @@ class MovieSerieDetail : Decodable{
         self.year = try valueContainer.decode(String.self, forKey: CodingKeys.year)
         self.type = try valueContainer.decode(String.self, forKey: CodingKeys.type)
         self.poster = try valueContainer.decode(URL.self, forKey: CodingKeys.poster)
+        self.posterString = try valueContainer.decode(String.self, forKey: CodingKeys.poster)
         self.released = try valueContainer.decode(String.self, forKey: CodingKeys.released)
         
         self.genre = try valueContainer.decode(String.self, forKey: CodingKeys.genre)
@@ -62,7 +74,9 @@ class MovieSerieDetail : Decodable{
         if let plot = plot{
             self.plot = plot
         }
-        
-        
     }
+    
+    
+    
+    
 }

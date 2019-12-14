@@ -7,11 +7,12 @@
 //
 
 import Foundation
+
 class NewRelease : Decodable{
-    var imdbID : String
-    var title : String
-    var released : String?
-    var type: String?
+    @objc dynamic var imdbID : String = ""
+    @objc dynamic var title : String = ""
+    @objc dynamic var released : String?
+    @objc dynamic var type: String?
     var image : URL?
     
     enum CodingKeys : String, CodingKey{
@@ -22,15 +23,19 @@ class NewRelease : Decodable{
         case released
     }
     
+
+    
     required init(from decoder : Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)
         
         self.imdbID = try valueContainer.decode(String.self, forKey: CodingKeys.imdbID)
         self.title = try valueContainer.decode(String.self, forKey: CodingKeys.title)
         
+        
         let type = try valueContainer.decodeIfPresent(String.self, forKey: CodingKeys.type)
         let released = try valueContainer.decodeIfPresent(String.self, forKey: CodingKeys.released)
         let image = try valueContainer.decodeIfPresent(URL.self, forKey: CodingKeys.image)
+        
         
         if let type = type{
             self.type = type

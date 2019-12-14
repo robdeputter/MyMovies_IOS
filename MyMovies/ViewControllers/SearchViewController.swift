@@ -16,7 +16,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
     
     
     
-    
     var movieSeries : [MovieSerie] = []
     
     override func viewDidLoad() {

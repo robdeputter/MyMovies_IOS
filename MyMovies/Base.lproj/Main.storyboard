@@ -170,11 +170,11 @@
                                                     <constraint firstAttribute="height" constant="204" id="xfw-Ce-B4Q"/>
                                                 </constraints>
                                             </imageView>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdN-VP-TgW">
-                                                <rect key="frame" x="308" y="27" width="40" height="35"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zdN-VP-TgW">
+                                                <rect key="frame" x="311" y="29" width="40" height="40"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="40" id="7Jm-6D-djj"/>
-                                                    <constraint firstAttribute="height" constant="35" id="cWv-pH-K8N"/>
+                                                    <constraint firstAttribute="height" constant="40" id="cWv-pH-K8N"/>
                                                 </constraints>
                                                 <state key="normal" image="baseline_playlist_add_white_18dp"/>
                                                 <connections>
@@ -242,7 +242,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WBT-fZ-5me">
-                                                <rect key="frame" x="356" y="27" width="40" height="35"/>
+                                                <rect key="frame" x="356" y="27" width="40" height="40"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <state key="normal" image="baseline_star_border_white_18dp"/>
                                                 <connections>
@@ -258,7 +258,7 @@
                                             <constraint firstItem="dJi-c7-5US" firstAttribute="top" secondItem="ODL-Gi-KxJ" secondAttribute="bottom" constant="5" id="Aj8-mu-MX4"/>
                                             <constraint firstItem="HBf-sf-TBi" firstAttribute="leading" secondItem="v5f-D0-Ujg" secondAttribute="leading" constant="71" id="Avf-La-zL5"/>
                                             <constraint firstItem="HBf-sf-TBi" firstAttribute="top" secondItem="UgL-Bh-31g" secondAttribute="bottom" constant="8" id="Awf-XV-LD5"/>
-                                            <constraint firstItem="zdN-VP-TgW" firstAttribute="top" secondItem="UgL-Bh-31g" secondAttribute="top" id="Bw6-ZP-sXa"/>
+                                            <constraint firstItem="zdN-VP-TgW" firstAttribute="top" secondItem="UgL-Bh-31g" secondAttribute="top" constant="3" id="Bw6-ZP-sXa"/>
                                             <constraint firstItem="LPR-wQ-ZOq" firstAttribute="leading" secondItem="v5f-D0-Ujg" secondAttribute="leading" constant="28" id="FK0-TL-lrk"/>
                                             <constraint firstItem="UgL-Bh-31g" firstAttribute="top" secondItem="v5f-D0-Ujg" secondAttribute="top" constant="26" id="Fob-U6-13r"/>
                                             <constraint firstAttribute="trailing" secondItem="dJi-c7-5US" secondAttribute="trailing" constant="33" id="HYI-o6-A37"/>
