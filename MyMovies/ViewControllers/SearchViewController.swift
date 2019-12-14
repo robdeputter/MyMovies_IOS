@@ -23,6 +23,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         super.viewDidLoad()
         
         setSearchbarInNavbar()
+        self.tableView.rowHeight = 114
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -98,10 +99,18 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMovieSerieCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMovieSerieCell", for: indexPath) as! MovieSerieCell
+        let movieSerie = movieSeries[indexPath.row]
         
-        // Configure the cell...
-        configure(cell, forItemAt: indexPath)
+        NetworkController.shared.fetchImage(with: movieSerie.poster){
+            image in
+            guard let image = image else {return}
+            
+            DispatchQueue.main.async {
+                cell.update(movieSerie: movieSerie, image: image)
+            }
+        }
+        
         
         return cell
     }
