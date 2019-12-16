@@ -46,7 +46,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let inputText = searchController.searchBar.text{
             
-            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
             
             guard !inputText.isEmpty else{
                 self.movieSeries.removeAll()
@@ -64,8 +64,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
                 
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
-                    
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 }
                 
             }
@@ -117,7 +115,6 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
                 cell.update(movieSerie: movieSerie, image: image)
             }
         }
-        
         
         return cell
     }

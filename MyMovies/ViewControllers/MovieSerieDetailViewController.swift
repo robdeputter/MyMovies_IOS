@@ -13,8 +13,30 @@ class MovieSerieDetailViewController: UIViewController {
     var movieSerieDetail : MovieSerieDetail!
     var movieSerie : MovieSerie!
     
+    var rating : Int!
+    
+    //SOURCE pop-up: https://www.youtube.com/watch?v=CXvOS6hYADc
+    //Pop-up view
+    @IBOutlet var ratingView: UIView!
+    
+    //ratingstars
+    @IBOutlet var ratingStar1: UIButton!
+    @IBOutlet var ratingStar2: UIButton!
+    @IBOutlet var ratingStar3: UIButton!
+    @IBOutlet var ratingStar4: UIButton!
+    @IBOutlet var ratingStar5: UIButton!
+    
+    //rating pop-up buttons
+    @IBOutlet var cancelRating: UIButton!
+    @IBOutlet var saveRating: UIButton!
+    
     //image
     @IBOutlet var poster: UIImageView!
+    
+    //viewEffect for rating
+    @IBOutlet var blurView: UIVisualEffectView!
+    var effect : UIVisualEffect!
+    
     
     //buttons
     @IBOutlet var watchlistButton: UIButton!
@@ -30,9 +52,17 @@ class MovieSerieDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        effect = blurView.effect
+        blurView.isHidden = true
+        blurView.effect = nil
+        
+        ratingView.layer.cornerRadius = 5
+        
+        
         
         if movieSerieDetail == nil{
-            
+            watchlistButton.isEnabled = false
+            favoritesButton.isEnabled = false
             NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
                 result in
                 guard let movieSerieDetail = result else {return}
@@ -49,10 +79,6 @@ class MovieSerieDetailViewController: UIViewController {
                         self.setUpButtons()
                     }
                 }
-                
-                
-            
-                
             }
         }else{
             DispatchQueue.main.async {
@@ -73,6 +99,7 @@ class MovieSerieDetailViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         if(self.movieSerieDetail != nil){
             self.setUpButtons()
@@ -85,10 +112,13 @@ class MovieSerieDetailViewController: UIViewController {
             DispatchQueue.main.async {
                 if(result){
                     self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
+                    
                 }
                 else{
                     self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_border_white_18dp"), for: .normal)
+                    
                 }
+                self.favoritesButton.isEnabled = true
             }
             
         }
@@ -98,10 +128,12 @@ class MovieSerieDetailViewController: UIViewController {
             DispatchQueue.main.async {
                 if(result){
                     self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_check_white_18dp"), for: .normal)
+                    
                 }
                 else{
                     self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_white_18dp"), for: .normal)
                 }
+                self.watchlistButton.isEnabled = true
             }
             
         }
@@ -172,18 +204,66 @@ class MovieSerieDetailViewController: UIViewController {
 
                 }
             }else{
-                DatabaseController.shared.addFavorite(movieSerieDetail: self.movieSerieDetail,rating: 3){
-                    response in
-                    if(response != nil){
-                        //show error
+                self.animateIn()
+            }
+        }
+    }
+    
+    //visual effects for pop-up view
+    func animateIn(){
+        self.view.addSubview(ratingView)
+        blurView.isHidden = false
+        ratingView.center = self.view.center
+        
+        ratingView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+        ratingView.alpha = 0
+        
+        UIView.animate(withDuration: 0.4){
+            self.blurView.effect = self.effect
+            self.ratingView.alpha = 1
+            self.ratingView.transform = CGAffineTransform.identity
+        }
+    }
+    
+    func animateOut(){
+        UIView.animate(withDuration: 0.3, animations: {
+            self.ratingView.transform = CGAffineTransform.init(scaleX: 1.3, y: 1.3)
+            self.ratingView.alpha = 0
+            
+            self.blurView.effect = nil
+            self.blurView.isHidden = true
+        }){
+            success in
+            self.ratingView.removeFromSuperview()
+        }
+    }
+    
+    @IBAction func cancelRating(_ sender: Any) {
+        animateOut()
+    }
+    
+    @IBAction func saveRating(_ sender: Any) {
+        DatabaseController.shared.addFavorite(movieSerieDetail: self.movieSerieDetail,rating: 3){
+            response in
+            if(response != nil){
+                //show error
+            }
+            else{
+                if(self.rating != nil){
+                    DispatchQueue.main.async {
+                        self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
                     }
-                    else{
-                        DispatchQueue.main.async {
-                            self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
-                        }
-                    }
+                    self.animateOut()
                 }
             }
         }
     }
+    
+    
+    @IBAction func ratingButtonPressed(_ sender: UIButton) {
+    }
+    
+    
+    
+    
 }

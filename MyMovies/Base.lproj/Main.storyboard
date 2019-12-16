@@ -280,6 +280,28 @@
                                                     <action selector="favoritesButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="Nbg-Yf-Rd0"/>
                                                 </connections>
                                             </button>
+                                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wzh-mm-1Lm">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="v8h-Vr-Umj">
+                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="725"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1LX-V8-9Xu">
+                                                            <rect key="frame" x="0.0" y="0.0" width="174" height="597"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="eyz-D5-r9c">
+                                                                <rect key="frame" x="0.0" y="0.0" width="174" height="597"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            </view>
+                                                            <vibrancyEffect>
+                                                                <blurEffect style="regular"/>
+                                                            </vibrancyEffect>
+                                                        </visualEffectView>
+                                                    </subviews>
+                                                </view>
+                                                <blurEffect style="dark"/>
+                                            </visualEffectView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
@@ -345,17 +367,115 @@
                     <navigationItem key="navigationItem" id="Ikp-ze-2C4"/>
                     <connections>
                         <outlet property="actorsDetails" destination="xDw-f7-lT4" id="Cus-ol-3KD"/>
+                        <outlet property="blurView" destination="wzh-mm-1Lm" id="lGV-BB-hwe"/>
+                        <outlet property="cancelRating" destination="Ub7-BJ-NwE" id="LhE-8s-OJj"/>
                         <outlet property="favoritesButton" destination="WBT-fZ-5me" id="SeA-b2-1pB"/>
                         <outlet property="genreDetails" destination="oc9-0Q-UeD" id="FFT-SJ-y58"/>
                         <outlet property="imdbRatingDetails" destination="LPR-wQ-ZOq" id="zPI-ua-BvP"/>
                         <outlet property="plotDetails" destination="wCy-QB-anl" id="KzP-y6-aWv"/>
                         <outlet property="poster" destination="UgL-Bh-31g" id="rt2-7m-Z89"/>
+                        <outlet property="ratingStar1" destination="YrY-h8-0JU" id="Ngc-zs-4cl"/>
+                        <outlet property="ratingStar2" destination="dqG-kg-ag6" id="k7N-bm-djL"/>
+                        <outlet property="ratingStar3" destination="iZa-0g-Lof" id="ALD-iN-E4M"/>
+                        <outlet property="ratingStar4" destination="FPU-sD-JAW" id="De8-en-dmL"/>
+                        <outlet property="ratingStar5" destination="xwf-DW-zkm" id="YZY-ZK-8ZS"/>
+                        <outlet property="ratingView" destination="czV-c5-cAi" id="Z12-jg-vnQ"/>
                         <outlet property="releasedDetails" destination="dJi-c7-5US" id="56b-gA-F5b"/>
+                        <outlet property="saveRating" destination="VPp-SF-jyf" id="BbO-iO-YNb"/>
                         <outlet property="titleDetails" destination="HBf-sf-TBi" id="rJk-Rr-Idp"/>
                         <outlet property="watchlistButton" destination="zdN-VP-TgW" id="4JA-gv-71I"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RTp-eD-89f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <view contentMode="scaleToFill" id="czV-c5-cAi">
+                    <rect key="frame" x="0.0" y="0.0" width="285" height="172"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleAspectFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="aEC-lC-niD">
+                            <rect key="frame" x="0.0" y="20" width="285" height="152"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gwb-xf-Awx">
+                                    <rect key="frame" x="118" y="0.0" width="49" height="33"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="17" translatesAutoresizingMaskIntoConstraints="NO" id="eVO-TV-sWL">
+                                    <rect key="frame" x="53.5" y="44" width="178" height="35.5"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YrY-h8-0JU">
+                                            <rect key="frame" x="0.0" y="0.0" width="22" height="35.5"/>
+                                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="star" catalog="system"/>
+                                            <connections>
+                                                <action selector="ratingButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="WTk-ng-md6"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dqG-kg-ag6">
+                                            <rect key="frame" x="39" y="0.0" width="22" height="35.5"/>
+                                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="star" catalog="system"/>
+                                            <connections>
+                                                <action selector="ratingButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="E8j-j8-MCr"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iZa-0g-Lof">
+                                            <rect key="frame" x="78" y="0.0" width="22" height="35.5"/>
+                                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="star" catalog="system"/>
+                                            <connections>
+                                                <action selector="ratingButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="2lM-bo-5Mk"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPU-sD-JAW">
+                                            <rect key="frame" x="117" y="0.0" width="22" height="35.5"/>
+                                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="star" catalog="system"/>
+                                            <connections>
+                                                <action selector="ratingButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="Is6-bl-9sf"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xwf-DW-zkm">
+                                            <rect key="frame" x="156" y="0.0" width="22" height="35.5"/>
+                                            <color key="tintColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <state key="normal" image="star" catalog="system"/>
+                                            <connections>
+                                                <action selector="ratingButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="mkx-TP-SZb"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                                <stackView opaque="NO" contentMode="scaleToFill" spacing="79" translatesAutoresizingMaskIntoConstraints="NO" id="B0k-qd-RQd">
+                                    <rect key="frame" x="64" y="90.5" width="157" height="61.5"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ub7-BJ-NwE">
+                                            <rect key="frame" x="0.0" y="0.0" width="48" height="61.5"/>
+                                            <state key="normal" title="Cancel"/>
+                                            <connections>
+                                                <action selector="cancelRating:" destination="5He-cS-pAN" eventType="touchUpInside" id="UBe-2C-OGk"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VPp-SF-jyf">
+                                            <rect key="frame" x="127" y="0.0" width="30" height="61.5"/>
+                                            <state key="normal" title="Add"/>
+                                            <connections>
+                                                <action selector="saveRating:" destination="5He-cS-pAN" eventType="touchUpInside" id="1HX-UE-AU9"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                </stackView>
+                            </subviews>
+                        </stackView>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.36658230633802819" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstItem="aEC-lC-niD" firstAttribute="top" secondItem="czV-c5-cAi" secondAttribute="top" constant="20" symbolic="YES" id="Be3-Pz-9Fe"/>
+                        <constraint firstItem="aEC-lC-niD" firstAttribute="leading" secondItem="50W-sD-kkx" secondAttribute="leading" id="S6R-hO-M7v"/>
+                        <constraint firstItem="50W-sD-kkx" firstAttribute="trailing" secondItem="aEC-lC-niD" secondAttribute="trailing" id="Uvg-Vg-zza"/>
+                        <constraint firstItem="50W-sD-kkx" firstAttribute="bottom" secondItem="aEC-lC-niD" secondAttribute="bottom" id="jSV-FN-EGL"/>
+                    </constraints>
+                    <viewLayoutGuide key="safeArea" id="50W-sD-kkx"/>
+                </view>
             </objects>
             <point key="canvasLocation" x="2023.1884057971015" y="433.92857142857139"/>
         </scene>
@@ -385,7 +505,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="hsC-LX-tjR">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewRelease" id="hsC-LX-tjR">
                                 <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hsC-LX-tjR" id="a0y-64-Rhb">
@@ -449,6 +569,7 @@
         <image name="baseline_star_border_white_18dp" width="18" height="18"/>
         <image name="exclamationmark.circle" catalog="system" width="64" height="60"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
+        <image name="star" catalog="system" width="64" height="58"/>
         <image name="star.fill" catalog="system" width="64" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
