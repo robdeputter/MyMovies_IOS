@@ -31,34 +31,54 @@ class MovieSerieDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
-            result in
-            guard let movieSerieDetail = result else {return}
+        if movieSerieDetail == nil{
             
-            var url = URL(string: movieSerieDetail.posterString)
-            self.movieSerieDetail = movieSerieDetail
-            NetworkController.shared.fetchImage(with: movieSerieDetail.poster!){
-            image in
-                guard let image = image else {return}
+            NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
+                result in
+                guard let movieSerieDetail = result else {return}
                 
                 
-                DispatchQueue.main.async {
-                    self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                self.movieSerieDetail = movieSerieDetail
+                NetworkController.shared.fetchImage(with: movieSerieDetail.poster!){
+                image in
+                    guard let image = image else {return}
+                    
+                    
+                    DispatchQueue.main.async {
+                        self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                        self.setUpButtons()
+                    }
+                }
+                
+                
+            
+                
+            }
+        }else{
+            DispatchQueue.main.async {
+                NetworkController.shared.fetchImage(with: URL(string: self.movieSerieDetail.posterString)!){
+                image in
+                    guard let image = image else {return}
+                    
+                    
+                    DispatchQueue.main.async {
+                        self.updateUI(movieSerieDetail: self.movieSerieDetail , image: image)
+                        self.setUpButtons()
+                    }
                 }
             }
-            
-            self.setUpButtons()
-        
-            
         }
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
-        
         
         
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if(self.movieSerieDetail != nil){
+            self.setUpButtons()
+        }
+    }
+    
     func setUpButtons(){
         DatabaseController.shared.inFavorites(movieSerieDetail: self.movieSerieDetail){
             result in
@@ -166,15 +186,4 @@ class MovieSerieDetailViewController: UIViewController {
             }
         }
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
