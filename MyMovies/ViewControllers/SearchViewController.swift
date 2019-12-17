@@ -107,14 +107,22 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SearchMovieSerieCell", for: indexPath) as! MovieSerieCell
         let movieSerie = movieSeries[indexPath.row]
         
-        NetworkController.shared.fetchImage(with: movieSerie.poster){
-            image in
-            guard let image = image else {return}
-            
+        if(movieSerie.poster != "N/A"){
+            NetworkController.shared.fetchImage(with: URL(string: movieSerie.poster)!){
+                image in
+                guard let image = image else {return}
+                
+                DispatchQueue.main.async {
+                    cell.update(movieSerie: movieSerie, image: image)
+                }
+            }
+        }else{
+
             DispatchQueue.main.async {
-                cell.update(movieSerie: movieSerie, image: image)
+                cell.update(movieSerie: movieSerie, image: #imageLiteral(resourceName: "NoPhotoAvailable"))
             }
         }
+        
         
         return cell
     }

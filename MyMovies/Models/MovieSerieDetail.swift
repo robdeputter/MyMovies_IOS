@@ -25,7 +25,6 @@ class MovieSerieDetail : Object, Decodable{
     @objc dynamic var plot : String?
     var favoriteRating : RealmOptional<Int> = RealmOptional<Int>()
     @objc dynamic var inWatchList : Bool = false
-    var poster : URL?
     
     enum CodingKeys : String , CodingKey{
         case imdbID
@@ -56,7 +55,6 @@ class MovieSerieDetail : Object, Decodable{
         self.title = try valueContainer.decode(String.self, forKey: CodingKeys.title)
         self.year = try valueContainer.decode(String.self, forKey: CodingKeys.year)
         self.type = try valueContainer.decode(String.self, forKey: CodingKeys.type)
-        self.poster = try valueContainer.decode(URL.self, forKey: CodingKeys.poster)
         self.posterString = try valueContainer.decode(String.self, forKey: CodingKeys.poster)
         self.released = try valueContainer.decode(String.self, forKey: CodingKeys.released)
         

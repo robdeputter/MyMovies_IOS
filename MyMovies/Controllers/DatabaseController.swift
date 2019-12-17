@@ -23,6 +23,7 @@ class DatabaseController{
     //Add methods
     func addFavorite(movieSerieDetail : MovieSerieDetail, rating : Int, completion: @escaping(Error?) -> Void){
         do{
+            
             let realm = try! Realm()
             try realm.write{
                 if((realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID)) != nil){
@@ -45,6 +46,7 @@ class DatabaseController{
     
     func addWatchListEntity(movieSerieDetail : MovieSerieDetail, completion: @escaping(Error?) -> Void){
         do{
+            
             let realm = try! Realm()
             try realm.write{
                 if((realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID)) != nil){
@@ -68,18 +70,15 @@ class DatabaseController{
     //remove methods
     func removeWatchListEntity(movieSerieDetail : MovieSerieDetail, completion: @escaping(Error?) -> Void){
         do{
+            
             let realm = try! Realm()
             try realm.write{
                 //check if the movieSerieDetail is in the database will be done in the viewController
                 let movieSerieDetailFromDB = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID)
                 
-                if(movieSerieDetailFromDB?.favoriteRating.value != nil){
-                    movieSerieDetailFromDB?.inWatchList = false
-                    realm.add(movieSerieDetailFromDB!, update: .modified)
-                }
-                else{
-                    realm.delete(movieSerieDetailFromDB!)
-                }
+                movieSerieDetailFromDB?.inWatchList = false
+                realm.add(movieSerieDetailFromDB!, update: .modified)
+                
             }
             completion(nil)
         }catch let error as NSError{
@@ -95,13 +94,9 @@ class DatabaseController{
                 //check if the movieSerieDetail is in the database will be done in the viewController
                 let movieSerieDetailFromDB = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID)
                 
-                if(movieSerieDetailFromDB!.inWatchList){
-                    movieSerieDetailFromDB?.favoriteRating.value = nil
-                    realm.add(movieSerieDetailFromDB!, update: .modified)
-                }
-                else{
-                    realm.delete(movieSerieDetailFromDB!)
-                }
+                movieSerieDetailFromDB?.favoriteRating.value = nil
+                realm.add(movieSerieDetailFromDB!, update: .modified)
+                
             }
             completion(nil)
         }catch let error as NSError{
@@ -113,6 +108,7 @@ class DatabaseController{
     //check methods
     func inWatchlist(movieSerieDetail : MovieSerieDetail, completion: @escaping(Bool) -> Void){
         do{
+            
             let realm = try! Realm()
             
             guard let movieSerieDb = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID) else
@@ -129,6 +125,7 @@ class DatabaseController{
     func inFavorites(movieSerieDetail : MovieSerieDetail, completion: @escaping(Bool) -> Void){
         do{
             let realm = try! Realm()
+            
             
             guard let movieSerieDb = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID) else
             {

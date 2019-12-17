@@ -13,7 +13,7 @@ class MovieSerieDetailViewController: UIViewController {
     var movieSerieDetail : MovieSerieDetail!
     var movieSerie : MovieSerie!
     
-    var rating : Int!
+    var rating : Int?
     
     //SOURCE pop-up: https://www.youtube.com/watch?v=CXvOS6hYADc
     //Pop-up view
@@ -57,9 +57,7 @@ class MovieSerieDetailViewController: UIViewController {
         blurView.effect = nil
         
         ratingView.layer.cornerRadius = 5
-        
-        
-        
+
         if movieSerieDetail == nil{
             watchlistButton.isEnabled = false
             favoritesButton.isEnabled = false
@@ -69,21 +67,29 @@ class MovieSerieDetailViewController: UIViewController {
                 
                 
                 self.movieSerieDetail = movieSerieDetail
-                NetworkController.shared.fetchImage(with: movieSerieDetail.poster!){
-                image in
-                    guard let image = image else {return}
-                    
-                    
+                if(movieSerieDetail.posterString != "N/A"){
+                    NetworkController.shared.fetchImage(with: URL(string: movieSerieDetail.posterString)!){
+                        image in
+                        guard let image = image else {return}
+                        
+                        
+                        DispatchQueue.main.async {
+                            self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                            self.setUpButtons()
+                        }
+                    }
+                }else{
                     DispatchQueue.main.async {
-                        self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                        self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
                         self.setUpButtons()
                     }
                 }
+                
             }
         }else{
             DispatchQueue.main.async {
                 NetworkController.shared.fetchImage(with: URL(string: self.movieSerieDetail.posterString)!){
-                image in
+                    image in
                     guard let image = image else {return}
                     
                     
@@ -137,7 +143,7 @@ class MovieSerieDetailViewController: UIViewController {
             }
             
         }
-            
+        
     }
     
     private func updateUI(movieSerieDetail : MovieSerieDetail, image : UIImage){
@@ -168,7 +174,7 @@ class MovieSerieDetailViewController: UIViewController {
                         }
                         
                     }
-
+                    
                 }
             }else{
                 DatabaseController.shared.addWatchListEntity(movieSerieDetail: self.movieSerieDetail){
@@ -199,9 +205,7 @@ class MovieSerieDetailViewController: UIViewController {
                         DispatchQueue.main.async {
                             self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_border_white_18dp"), for: .normal)
                         }
-                        
                     }
-
                 }
             }else{
                 self.animateIn()
@@ -236,6 +240,12 @@ class MovieSerieDetailViewController: UIViewController {
             success in
             self.ratingView.removeFromSuperview()
         }
+        
+        ratingStar1.setImage(UIImage(systemName: "star"), for: .normal)
+        ratingStar2.setImage(UIImage(systemName: "star"), for: .normal)
+        ratingStar3.setImage(UIImage(systemName: "star"), for: .normal)
+        ratingStar4.setImage(UIImage(systemName: "star"), for: .normal)
+        ratingStar5.setImage(UIImage(systemName: "star"), for: .normal)
     }
     
     @IBAction func cancelRating(_ sender: Any) {
@@ -243,26 +253,70 @@ class MovieSerieDetailViewController: UIViewController {
     }
     
     @IBAction func saveRating(_ sender: Any) {
-        DatabaseController.shared.addFavorite(movieSerieDetail: self.movieSerieDetail,rating: 3){
-            response in
-            if(response != nil){
-                //show error
-            }
-            else{
-                if(self.rating != nil){
+        if(rating != nil){
+            DatabaseController.shared.addFavorite(movieSerieDetail: self.movieSerieDetail,rating: rating!){
+                response in
+                if(response != nil){
+                    //show error
+                }
+                else{
                     DispatchQueue.main.async {
                         self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
                     }
                     self.animateOut()
+                    self.rating = nil
                 }
             }
         }
+        
     }
     
     
     @IBAction func ratingButtonPressed(_ sender: UIButton) {
+        
+        if sender.isEqual(ratingStar1){
+            rating = 1
+            ratingStar1.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar2.setImage(UIImage(systemName: "star"), for: .normal)
+            ratingStar3.setImage(UIImage(systemName: "star"), for: .normal)
+            ratingStar4.setImage(UIImage(systemName: "star"), for: .normal)
+            ratingStar5.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+        else if sender.isEqual(ratingStar2){
+            rating = 2
+            ratingStar1.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar2.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar3.setImage(UIImage(systemName: "star"), for: .normal)
+            ratingStar4.setImage(UIImage(systemName: "star"), for: .normal)
+            ratingStar5.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+        else if sender.isEqual(ratingStar3){
+            rating = 3
+            ratingStar1.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar2.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar3.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar4.setImage(UIImage(systemName: "star"), for: .normal)
+            ratingStar5.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+        else if sender.isEqual(ratingStar4){
+            rating = 4
+            ratingStar1.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar2.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar3.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar4.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar5.setImage(UIImage(systemName: "star"), for: .normal)
+        }
+            
+        else if sender.isEqual(ratingStar5){
+            rating = 5
+            ratingStar1.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar2.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar3.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar4.setImage(UIImage(systemName: "star.fill"), for: .normal)
+            ratingStar5.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        }
+        
     }
-    
     
     
     

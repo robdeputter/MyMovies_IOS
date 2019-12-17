@@ -13,7 +13,7 @@ class MovieSerie : Decodable{
     var title : String
     var year : String
     var type : String
-    var poster : URL
+    var poster : String
     
     enum CodingKeys : String, CodingKey{
         case title = "Title"
@@ -30,6 +30,6 @@ class MovieSerie : Decodable{
         self.title = try valueContainer.decode(String.self, forKey: CodingKeys.title)
         self.year = try valueContainer.decode(String.self, forKey: CodingKeys.year)
         self.type = try valueContainer.decode(String.self, forKey: CodingKeys.type)
-        self.poster = try valueContainer.decode(URL.self, forKey: CodingKeys.poster)
+        self.poster = try valueContainer.decode(String.self, forKey: CodingKeys.poster)
     }
 }
