@@ -12,6 +12,7 @@ import RealmSwift
 class MovieSerieDetailViewController: UIViewController {
     var movieSerieDetail : MovieSerieDetail!
     var movieSerie : MovieSerie!
+    var newRelease : NewRelease!
     
     var rating : Int?
     
@@ -383,7 +384,6 @@ class MovieSerieDetailViewController: UIViewController {
             ratingStar4.setImage(UIImage(systemName: "star.fill"), for: .normal)
             ratingStar5.setImage(UIImage(systemName: "star.fill"), for: .normal)
         }
-        
     }
     
     

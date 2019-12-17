@@ -13,7 +13,7 @@ class NewRelease : Decodable{
     var title : String = ""
     var released : String?
     var type: String?
-    var image : URL?
+    var image : String?
     
     enum CodingKeys : String, CodingKey{
         case imdbID = "imdbid"
@@ -32,7 +32,7 @@ class NewRelease : Decodable{
         
         let type = try valueContainer.decodeIfPresent(String.self, forKey: CodingKeys.type)
         let released = try valueContainer.decodeIfPresent(String.self, forKey: CodingKeys.released)
-        let image = try valueContainer.decodeIfPresent(URL.self, forKey: CodingKeys.image)
+        let image = try valueContainer.decodeIfPresent(String.self, forKey: CodingKeys.image)
         
         
         if let type = type{

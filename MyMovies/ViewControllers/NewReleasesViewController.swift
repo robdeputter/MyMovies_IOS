@@ -9,10 +9,22 @@
 import UIKit
 
 class NewReleasesViewController: UITableViewController {
+    
+    var newReleases : [NewRelease] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.tableView.rowHeight = 114
+        
+        NetworkController.shared.fetchNewReleases(){
+            results in
+            guard let newReleases = results else {return}
+            
+            self.newReleases = newReleases
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -24,23 +36,57 @@ class NewReleasesViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        if newReleases.count == 0 {
+            tableView.setEmptyView(message: "Check your internet connection")
+        }
+        else{
+            tableView.restore()
+        }
+        return newReleases.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewRelease", for: indexPath) as! MovieSerieCell
+        let newRelease = newReleases[indexPath.row]
+        
+        if newRelease.image != "N/A"{
+            NetworkController.shared.fetchImage(with: URL(string: newRelease.image!)!){
+                image in
+                guard let image = image else {return}
+                
+                DispatchQueue.main.async {
+                    cell.updateNewRelease(newRelease: newRelease, image: image)
+                }
+                
+            }
+        }else{
+            DispatchQueue.main.async {
+                cell.updateNewRelease(newRelease: newRelease, image: #imageLiteral(resourceName: "NoPhotoAvailable"))
+            }
+        }
         return cell
     }
-    */
+    
+    
+    // MARK: - Navigation
+
+    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Get the new view controller using segue.destination.
+        // Pass the selected object to the new view controller.
+        if segue.identifier == "NewReleaseSegue"{
+            let movieSerieDetailViewController = segue.destination as! MovieSerieDetailViewController
+            let index = tableView.indexPathForSelectedRow!.row
+            movieSerieDetailViewController.newRelease = newReleases[index]
+        }
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

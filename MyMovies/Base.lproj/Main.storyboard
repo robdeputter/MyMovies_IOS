@@ -589,13 +589,66 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewRelease" id="hsC-LX-tjR">
-                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="NewRelease" rowHeight="114" id="hsC-LX-tjR" customClass="MovieSerieCell" customModule="MyMovies" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="114"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="hsC-LX-tjR" id="a0y-64-Rhb">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="114"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fws-6j-kUX">
+                                            <rect key="frame" x="6" y="4" width="84" height="106"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="84" id="NEu-Fu-nto"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="22" translatesAutoresizingMaskIntoConstraints="NO" id="r4s-1c-OIw">
+                                            <rect key="frame" x="98" y="5" width="280" height="99"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4sP-V1-tWk">
+                                                    <rect key="frame" x="0.0" y="0.0" width="280" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Year" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Ng-Vq-hVo">
+                                                    <rect key="frame" x="0.0" y="43" width="280" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="3CO-Yx-Ag3"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bip-Nk-EY8">
+                                                    <rect key="frame" x="0.0" y="82" width="280" height="17"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="17" id="YOS-92-pVA"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="r4s-1c-OIw" secondAttribute="trailing" constant="5" id="Iuw-Os-bif"/>
+                                        <constraint firstAttribute="bottom" secondItem="Fws-6j-kUX" secondAttribute="bottom" constant="4" id="esB-hX-PIa"/>
+                                        <constraint firstItem="Fws-6j-kUX" firstAttribute="top" secondItem="a0y-64-Rhb" secondAttribute="top" constant="4" id="pes-yH-xpB"/>
+                                        <constraint firstItem="r4s-1c-OIw" firstAttribute="top" secondItem="a0y-64-Rhb" secondAttribute="top" constant="5" id="s6Y-L1-xua"/>
+                                        <constraint firstItem="Fws-6j-kUX" firstAttribute="leading" secondItem="a0y-64-Rhb" secondAttribute="leading" constant="6" id="tBP-k2-cc8"/>
+                                        <constraint firstAttribute="bottom" secondItem="r4s-1c-OIw" secondAttribute="bottom" constant="10" id="uc7-lg-HkM"/>
+                                        <constraint firstItem="r4s-1c-OIw" firstAttribute="leading" secondItem="Fws-6j-kUX" secondAttribute="trailing" constant="8" id="vCL-J7-Abg"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="poster" destination="Fws-6j-kUX" id="q4M-Pu-QHY"/>
+                                    <outlet property="title" destination="4sP-V1-tWk" id="vU9-cc-8cc"/>
+                                    <outlet property="type" destination="Bip-Nk-EY8" id="53B-SK-Mff"/>
+                                    <outlet property="year" destination="7Ng-Vq-hVo" id="yNa-mX-io9"/>
+                                    <segue destination="5He-cS-pAN" kind="show" identifier="NewReleaseSegue" id="gNI-Ya-qWF"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -607,7 +660,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZT-hb-JfI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="451" y="1997"/>
+            <point key="canvasLocation" x="450.72463768115944" y="1996.875"/>
         </scene>
         <!--Watchlist-->
         <scene sceneID="QwC-UA-ZnO">
@@ -783,6 +836,6 @@
         <image name="star.fill" catalog="system" width="64" height="58"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HxI-VB-gmb"/>
+        <segue reference="gNI-Ya-qWF"/>
     </inferredMetricsTieBreakers>
 </document>

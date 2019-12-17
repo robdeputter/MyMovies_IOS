@@ -13,7 +13,7 @@
     static let shared : NetworkController = NetworkController()
     
     let baseURLimdb = URL(string: "https://movie-database-imdb-alternative.p.rapidapi.com")!
-    let baseURLunogs = URL(string: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi/")!
+    let baseURLunogs = URL(string: "https://unogs-unogs-v1.p.rapidapi.com/aaapi.cgi")!
     
     func fetchSearchMovieSeries(with name : String?, with year : String? , with type : String?,
                                 completion : @escaping (_ movieSeries : [MovieSerie]?) -> Void){
@@ -83,7 +83,7 @@
             "p": "1"
         ]
         
-        let url = baseURLimdb.withQueries(queries)!
+        let url = baseURLunogs.withQueries(queries)!
         let req = url.addUrlHeaders(for: url)
         
         let task = URLSession.shared.dataTask(with: req){

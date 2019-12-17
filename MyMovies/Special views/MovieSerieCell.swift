@@ -36,4 +36,13 @@ class MovieSerieCell: UITableViewCell {
         type.text = movieSerie.type
         poster.image = image
     }
+    
+    func updateNewRelease(newRelease : NewRelease, image : UIImage){
+        title.numberOfLines = 0
+        title.lineBreakMode = NSLineBreakMode.byWordWrapping
+        title.text = newRelease.title
+        year.text = newRelease.released
+        type.text = newRelease.type
+        poster.image = image
+    }
 }
