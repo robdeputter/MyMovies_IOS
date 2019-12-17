@@ -18,6 +18,7 @@ class DatabaseController{
     static let shared = DatabaseController()
     
     var favorites : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("favoriteRating != nil")
+        .sorted(byKeyPath: "favoriteRating", ascending: false)
     var watchlistEntities : Results<MovieSerieDetail> = try! Realm().objects(MovieSerieDetail.self).filter("inWatchList != false")
     
     //Add methods

@@ -19,7 +19,7 @@ class MovieSerieDetailViewController: UIViewController {
     //Pop-up view
     @IBOutlet var ratingView: UIView!
     
-    //ratingstars
+    //ratingstars pop up
     @IBOutlet var ratingStar1: UIButton!
     @IBOutlet var ratingStar2: UIButton!
     @IBOutlet var ratingStar3: UIButton!
@@ -50,6 +50,15 @@ class MovieSerieDetailViewController: UIViewController {
     @IBOutlet var releasedDetails: UILabel!
     @IBOutlet var genreDetails: UILabel!
     
+    //Ratingstars details
+    @IBOutlet weak var ratingDetailView: UIStackView!
+    @IBOutlet weak var star1: UIImageView!
+    @IBOutlet weak var star2: UIImageView!
+    @IBOutlet weak var star3: UIImageView!
+    @IBOutlet weak var star4: UIImageView!
+    @IBOutlet weak var star5: UIImageView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         effect = blurView.effect
@@ -57,7 +66,7 @@ class MovieSerieDetailViewController: UIViewController {
         blurView.effect = nil
         
         ratingView.layer.cornerRadius = 5
-
+        
         if movieSerieDetail == nil{
             watchlistButton.isEnabled = false
             favoritesButton.isEnabled = false
@@ -117,11 +126,11 @@ class MovieSerieDetailViewController: UIViewController {
             result in
             DispatchQueue.main.async {
                 if(result){
-                    self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
+                    self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                     
                 }
                 else{
-                    self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_border_white_18dp"), for: .normal)
+                    self.favoritesButton.setImage(UIImage(systemName: "star"), for: .normal)
                     
                 }
                 self.favoritesButton.isEnabled = true
@@ -146,6 +155,60 @@ class MovieSerieDetailViewController: UIViewController {
         
     }
     
+    func updateRatingBar(){
+        if movieSerieDetail.favoriteRating.value == nil{
+            ratingDetailView.isHidden = true
+            
+            star1.image = UIImage(systemName: "star")
+            star2.image = UIImage(systemName: "star")
+            star3.image = UIImage(systemName: "star")
+            star4.image = UIImage(systemName: "star")
+            star5.image = UIImage(systemName: "star")
+            
+        }
+        else{
+            switch movieSerieDetail.favoriteRating.value {
+            case 1:
+                star1.image = UIImage(systemName: "star.fill")
+                star2.image = UIImage(systemName: "star")
+                star3.image = UIImage(systemName: "star")
+                star4.image = UIImage(systemName: "star")
+                star5.image = UIImage(systemName: "star")
+            case 2:
+                star1.image = UIImage(systemName: "star.fill")
+                star2.image = UIImage(systemName: "star.fill")
+                star3.image = UIImage(systemName: "star")
+                star4.image = UIImage(systemName: "star")
+                star5.image = UIImage(systemName: "star")
+            case 3:
+                star1.image = UIImage(systemName: "star.fill")
+                star2.image = UIImage(systemName: "star.fill")
+                star3.image = UIImage(systemName: "star.fill")
+                star4.image = UIImage(systemName: "star")
+                star5.image = UIImage(systemName: "star")
+            case 4:
+                star1.image = UIImage(systemName: "star.fill")
+                star2.image = UIImage(systemName: "star.fill")
+                star3.image = UIImage(systemName: "star.fill")
+                star4.image = UIImage(systemName: "star.fill")
+                star5.image = UIImage(systemName: "star")
+            case 5:
+                star1.image = UIImage(systemName: "star.fill")
+                star2.image = UIImage(systemName: "star.fill")
+                star3.image = UIImage(systemName: "star.fill")
+                star4.image = UIImage(systemName: "star.fill")
+                star5.image = UIImage(systemName: "star.fill")
+            default:
+                star1.image = UIImage(systemName: "star")
+                star2.image = UIImage(systemName: "star")
+                star3.image = UIImage(systemName: "star")
+                star4.image = UIImage(systemName: "star")
+                star5.image = UIImage(systemName: "star")
+            }
+            
+        }
+    }
+    
     private func updateUI(movieSerieDetail : MovieSerieDetail, image : UIImage){
         titleDetails.text = movieSerieDetail.title
         plotDetails.text = movieSerieDetail.plot
@@ -155,6 +218,7 @@ class MovieSerieDetailViewController: UIViewController {
         genreDetails.text = "Genre: \(movieSerieDetail.genre)"
         poster.image = image
         
+        updateRatingBar()
         
     }
     
@@ -203,7 +267,8 @@ class MovieSerieDetailViewController: UIViewController {
                     }
                     else{
                         DispatchQueue.main.async {
-                            self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_border_white_18dp"), for: .normal)
+                            self.favoritesButton.setImage(UIImage(systemName: "star"), for: .normal)
+                            self.ratingDetailView.isHidden = true
                         }
                     }
                 }
@@ -261,7 +326,10 @@ class MovieSerieDetailViewController: UIViewController {
                 }
                 else{
                     DispatchQueue.main.async {
-                        self.favoritesButton.setImage(#imageLiteral(resourceName: "baseline_star_white_18dp"), for: .normal)
+                        self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                        self.ratingDetailView.isHidden = false
+                        self.updateRatingBar()
+                        
                     }
                     self.animateOut()
                     self.rating = nil
