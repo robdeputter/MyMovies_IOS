@@ -198,10 +198,10 @@ class MovieSerieDetailViewController: UIViewController {
             result in
             DispatchQueue.main.async {
                 if(result){
-                    self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_check_white_18dp"), for: .normal)
+                    self.watchlistButton.setImage(UIImage(systemName: "text.badge.checkmark"), for: .normal)
                 }
                 else{
-                    self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_white_18dp"), for: .normal)
+                    self.watchlistButton.setImage(UIImage(systemName: "text.badge.plus"), for: .normal)
                 }
                 self.watchlistButton.isEnabled = true
             }
@@ -281,7 +281,7 @@ class MovieSerieDetailViewController: UIViewController {
                     }
                     else{
                         DispatchQueue.main.async {
-                            self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_white_18dp"), for: .normal)
+                            self.watchlistButton.setImage(UIImage(systemName: "text.badge.plus"), for: .normal)
                         }
                         
                     }
@@ -295,7 +295,7 @@ class MovieSerieDetailViewController: UIViewController {
                     }
                     else{
                         DispatchQueue.main.async {
-                            self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_check_white_18dp"), for: .normal)
+                            self.watchlistButton.setImage(UIImage(systemName: "text.badge.checkmark"), for: .normal)
                         }
                     }
                 }
