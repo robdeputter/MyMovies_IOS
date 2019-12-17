@@ -11,11 +11,21 @@ import UIKit
 class NewReleasesViewController: UITableViewController {
     
     var newReleases : [NewRelease] = []
-
+    var activityIndicatorView: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.rowHeight = 114
         
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        //activityIndicator: https://dzone.com/articles/displaying-an-activity-indicator-while-loading-tab
+        activityIndicatorView.startAnimating()
         NetworkController.shared.fetchNewReleases(){
             results in
             guard let newReleases = results else {return}
@@ -23,13 +33,20 @@ class NewReleasesViewController: UITableViewController {
             self.newReleases = newReleases
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+                self.activityIndicatorView.stopAnimating()
+                if newReleases.count == 0 {
+                    self.tableView.setEmptyView(message: "Check your internet connection")
+                }
+                else{
+                    self.tableView.restore()
+                }
             }
         }
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    override func loadView() {
+        super.loadView()
+        activityIndicatorView = UIActivityIndicatorView(style: .large)
+        tableView.backgroundView = activityIndicatorView
     }
 
     // MARK: - Table view data source
@@ -41,12 +58,6 @@ class NewReleasesViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if newReleases.count == 0 {
-            tableView.setEmptyView(message: "Check your internet connection")
-        }
-        else{
-            tableView.restore()
-        }
         return newReleases.count
     }
 
@@ -63,7 +74,6 @@ class NewReleasesViewController: UITableViewController {
                 DispatchQueue.main.async {
                     cell.updateNewRelease(newRelease: newRelease, image: image)
                 }
-                
             }
         }else{
             DispatchQueue.main.async {

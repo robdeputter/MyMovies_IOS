@@ -44,6 +44,19 @@ class DatabaseController{
         }
     }
     
+    func getFavoritesRatingMovie(imdbId : String, completion: @escaping(Int?) -> Void){
+        do{
+            let realm = try! Realm()
+            let favorite : MovieSerieDetail? = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: imdbId)
+            guard let favoriteNotNull = favorite else {
+                completion(nil)
+                return
+            }
+            
+            completion(favoriteNotNull.favoriteRating.value)
+        }
+    }
+    
     
     func addWatchListEntity(movieSerieDetail : MovieSerieDetail, completion: @escaping(Error?) -> Void){
         do{
@@ -107,12 +120,12 @@ class DatabaseController{
     
     
     //check methods
-    func inWatchlist(movieSerieDetail : MovieSerieDetail, completion: @escaping(Bool) -> Void){
+    func inWatchlist(imdbID: String, completion: @escaping(Bool) -> Void){
         do{
             
             let realm = try! Realm()
             
-            guard let movieSerieDb = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID) else
+            guard let movieSerieDb = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: imdbID) else
             {
                 completion(false)
                 return
@@ -123,12 +136,12 @@ class DatabaseController{
         }
     }
     
-    func inFavorites(movieSerieDetail : MovieSerieDetail, completion: @escaping(Bool) -> Void){
+    func inFavorites(imdbID : String, completion: @escaping(Bool) -> Void){
         do{
             let realm = try! Realm()
             
             
-            guard let movieSerieDb = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: movieSerieDetail.imdbID) else
+            guard let movieSerieDb = realm.object(ofType: MovieSerieDetail.self, forPrimaryKey: imdbID) else
             {
                 completion(false)
                 return

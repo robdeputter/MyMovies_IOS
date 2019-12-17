@@ -67,14 +67,48 @@ class MovieSerieDetailViewController: UIViewController {
         blurView.effect = nil
         
         ratingView.layer.cornerRadius = 5
-        
+        watchlistButton.isEnabled = false
+        favoritesButton.isEnabled = false
+        self.showSpinner(onView: self.view)
         if movieSerieDetail == nil{
-            watchlistButton.isEnabled = false
-            favoritesButton.isEnabled = false
-            NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
+            guard let newRelease = self.newRelease else {
+                NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
+                    result in
+                    guard let movieSerieDetail = result else {return}
+                    
+                    
+                    self.movieSerieDetail = movieSerieDetail
+                    if(movieSerieDetail.posterString != "N/A"){
+                        NetworkController.shared.fetchImage(with: URL(string: movieSerieDetail.posterString)!){
+                            image in
+                            guard let image = image else {return}
+                            
+                            DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                                    self.updateRatingBar(rating: rating)
+                            }
+                            DispatchQueue.main.async {
+                                self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                                self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                                self.removeSpinner()
+                            }
+                        }
+                    }else{
+                        DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                                self.updateRatingBar(rating: rating)
+                        }
+                        DispatchQueue.main.async {
+                            self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
+                            self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                            self.removeSpinner()
+                        }
+                    }
+                    
+                }
+                return
+            }
+            NetworkController.shared.fetchMovieSerieDetail(with: newRelease.imdbID){
                 result in
                 guard let movieSerieDetail = result else {return}
-                
                 
                 self.movieSerieDetail = movieSerieDetail
                 if(movieSerieDetail.posterString != "N/A"){
@@ -82,19 +116,25 @@ class MovieSerieDetailViewController: UIViewController {
                         image in
                         guard let image = image else {return}
                         
-                        
+                        DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                                self.updateRatingBar(rating: rating)
+                        }
                         DispatchQueue.main.async {
                             self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
-                            self.setUpButtons()
+                            self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                            self.removeSpinner()
                         }
                     }
                 }else{
+                    DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                            self.updateRatingBar(rating: rating)
+                    }
                     DispatchQueue.main.async {
                         self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
-                        self.setUpButtons()
+                        self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                        self.removeSpinner()
                     }
                 }
-                
             }
         }else{
             DispatchQueue.main.async {
@@ -105,109 +145,118 @@ class MovieSerieDetailViewController: UIViewController {
                     
                     DispatchQueue.main.async {
                         self.updateUI(movieSerieDetail: self.movieSerieDetail , image: image)
-                        self.setUpButtons()
+                        self.setUpButtons(imdbID: self.movieSerieDetail.imdbID)
+                        self.updateRatingBar(rating: self.movieSerieDetail.favoriteRating.value)
+                        self.removeSpinner()
                     }
                 }
             }
         }
-        
-        
-        // Do any additional setup after loading the view.
     }
     
     
     override func viewWillAppear(_ animated: Bool) {
         if(self.movieSerieDetail != nil){
-            self.setUpButtons()
+            self.setUpButtons(imdbID: self.movieSerieDetail.imdbID)
+            DatabaseController.shared.getFavoritesRatingMovie(imdbId: self.movieSerieDetail.imdbID){
+                result in
+                self.updateRatingBar(rating: result)
+            }
+        }
+        else if self.movieSerie != nil{
+            self.setUpButtons(imdbID: self.movieSerie.imdbID)
+            DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerie.imdbID){
+                result in
+                self.updateRatingBar(rating: result)
+            }
+        }
+        else if self.newRelease != nil{
+            self.setUpButtons(imdbID: self.newRelease.imdbID)
+            DatabaseController.shared.getFavoritesRatingMovie(imdbId: newRelease.imdbID){
+                result in
+                self.updateRatingBar(rating: result)
+            }
         }
     }
     
-    func setUpButtons(){
-        DatabaseController.shared.inFavorites(movieSerieDetail: self.movieSerieDetail){
+    func setUpButtons(imdbID : String){
+        DatabaseController.shared.inFavorites(imdbID: imdbID){
             result in
             DispatchQueue.main.async {
                 if(result){
                     self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-                    
                 }
                 else{
                     self.favoritesButton.setImage(UIImage(systemName: "star"), for: .normal)
-                    
                 }
                 self.favoritesButton.isEnabled = true
             }
             
         }
         
-        DatabaseController.shared.inWatchlist(movieSerieDetail: self.movieSerieDetail){
+        DatabaseController.shared.inWatchlist(imdbID: imdbID){
             result in
             DispatchQueue.main.async {
                 if(result){
                     self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_check_white_18dp"), for: .normal)
-                    
                 }
                 else{
                     self.watchlistButton.setImage(#imageLiteral(resourceName: "baseline_playlist_add_white_18dp"), for: .normal)
                 }
                 self.watchlistButton.isEnabled = true
             }
-            
         }
-        
     }
     
-    func updateRatingBar(){
-        if movieSerieDetail.favoriteRating.value == nil{
-            ratingDetailView.isHidden = true
-            
+    //Will always run on the mainthread to update the view
+    //Warnings are
+    func updateRatingBar(rating : Int?){
+        switch rating {
+        case 1:
+            ratingDetailView.isHidden = false
+            star1.image = UIImage(systemName: "star.fill")
+            star2.image = UIImage(systemName: "star")
+            star3.image = UIImage(systemName: "star")
+            star4.image = UIImage(systemName: "star")
+            star5.image = UIImage(systemName: "star")
+        case 2:
+            ratingDetailView.isHidden = false
+            star1.image = UIImage(systemName: "star.fill")
+            star2.image = UIImage(systemName: "star.fill")
+            star3.image = UIImage(systemName: "star")
+            star4.image = UIImage(systemName: "star")
+            star5.image = UIImage(systemName: "star")
+        case 3:
+            ratingDetailView.isHidden = false
+            star1.image = UIImage(systemName: "star.fill")
+            star2.image = UIImage(systemName: "star.fill")
+            star3.image = UIImage(systemName: "star.fill")
+            star4.image = UIImage(systemName: "star")
+            star5.image = UIImage(systemName: "star")
+        case 4:
+            ratingDetailView.isHidden = false
+            star1.image = UIImage(systemName: "star.fill")
+            star2.image = UIImage(systemName: "star.fill")
+            star3.image = UIImage(systemName: "star.fill")
+            star4.image = UIImage(systemName: "star.fill")
+            star5.image = UIImage(systemName: "star")
+        case 5:
+            ratingDetailView.isHidden = false
+            star1.image = UIImage(systemName: "star.fill")
+            star2.image = UIImage(systemName: "star.fill")
+            star3.image = UIImage(systemName: "star.fill")
+            star4.image = UIImage(systemName: "star.fill")
+            star5.image = UIImage(systemName: "star.fill")
+        default:
             star1.image = UIImage(systemName: "star")
             star2.image = UIImage(systemName: "star")
             star3.image = UIImage(systemName: "star")
             star4.image = UIImage(systemName: "star")
             star5.image = UIImage(systemName: "star")
-            
+            ratingDetailView.isHidden = true
         }
-        else{
-            switch movieSerieDetail.favoriteRating.value {
-            case 1:
-                star1.image = UIImage(systemName: "star.fill")
-                star2.image = UIImage(systemName: "star")
-                star3.image = UIImage(systemName: "star")
-                star4.image = UIImage(systemName: "star")
-                star5.image = UIImage(systemName: "star")
-            case 2:
-                star1.image = UIImage(systemName: "star.fill")
-                star2.image = UIImage(systemName: "star.fill")
-                star3.image = UIImage(systemName: "star")
-                star4.image = UIImage(systemName: "star")
-                star5.image = UIImage(systemName: "star")
-            case 3:
-                star1.image = UIImage(systemName: "star.fill")
-                star2.image = UIImage(systemName: "star.fill")
-                star3.image = UIImage(systemName: "star.fill")
-                star4.image = UIImage(systemName: "star")
-                star5.image = UIImage(systemName: "star")
-            case 4:
-                star1.image = UIImage(systemName: "star.fill")
-                star2.image = UIImage(systemName: "star.fill")
-                star3.image = UIImage(systemName: "star.fill")
-                star4.image = UIImage(systemName: "star.fill")
-                star5.image = UIImage(systemName: "star")
-            case 5:
-                star1.image = UIImage(systemName: "star.fill")
-                star2.image = UIImage(systemName: "star.fill")
-                star3.image = UIImage(systemName: "star.fill")
-                star4.image = UIImage(systemName: "star.fill")
-                star5.image = UIImage(systemName: "star.fill")
-            default:
-                star1.image = UIImage(systemName: "star")
-                star2.image = UIImage(systemName: "star")
-                star3.image = UIImage(systemName: "star")
-                star4.image = UIImage(systemName: "star")
-                star5.image = UIImage(systemName: "star")
-            }
-            
-        }
+        
+        
     }
     
     private func updateUI(movieSerieDetail : MovieSerieDetail, image : UIImage){
@@ -218,13 +267,10 @@ class MovieSerieDetailViewController: UIViewController {
         releasedDetails.text = "Released: \(movieSerieDetail.released)"
         genreDetails.text = "Genre: \(movieSerieDetail.genre)"
         poster.image = image
-        
-        updateRatingBar()
-        
     }
     
     @IBAction func watchlistButtonPressed(_ sender: UIButton) {
-        DatabaseController.shared.inWatchlist(movieSerieDetail: self.movieSerieDetail){
+        DatabaseController.shared.inWatchlist(imdbID: self.movieSerieDetail.imdbID){
             result in
             if(result){
                 
@@ -258,7 +304,7 @@ class MovieSerieDetailViewController: UIViewController {
     }
     
     @IBAction func favoritesButtonPressed(_ sender: UIButton) {
-        DatabaseController.shared.inFavorites(movieSerieDetail: self.movieSerieDetail){
+        DatabaseController.shared.inFavorites(imdbID: self.movieSerieDetail.imdbID){
             result in
             if(result){
                 DatabaseController.shared.removeFavorite(movieSerieDetail: self.movieSerieDetail){
@@ -275,6 +321,7 @@ class MovieSerieDetailViewController: UIViewController {
                 }
             }else{
                 self.animateIn()
+                
             }
         }
     }
@@ -326,13 +373,14 @@ class MovieSerieDetailViewController: UIViewController {
                     //show error
                 }
                 else{
-                    DispatchQueue.main.async {
+                    
                         self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                         self.ratingDetailView.isHidden = false
-                        self.updateRatingBar()
+                    self.updateRatingBar(rating: self.rating)
                         
-                    }
+                    
                     self.animateOut()
+                    //reset the rating --> if the user removes the favorite and adds him back, the ratingbar has to be filled with empty stars
                     self.rating = nil
                 }
             }
