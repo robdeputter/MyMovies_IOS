@@ -62,15 +62,23 @@ class FavoritesViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FavoritesCell", for: indexPath) as! MovieSerieDetailCell
         let favorite = favorites[indexPath.row]
         
-        
-        NetworkController.shared.fetchImage(with: URL(string: favorite.posterString)!){
-            result in
-            guard let image = result else {return}
-            
+        if(favorite.posterString == "N/A"){
             DispatchQueue.main.async {
-                cell.update(movieSerieDetail: favorite, image: image)
+                cell.update(movieSerieDetail: favorite, image: #imageLiteral(resourceName: "NoPhotoAvailable"))
             }
         }
+        else{
+            NetworkController.shared.fetchImage(with: URL(string: favorite.posterString)!){
+                result in
+                guard let image = result else {return}
+                
+                DispatchQueue.main.async {
+                    cell.update(movieSerieDetail: favorite, image: image)
+                }
+                
+            }
+        }
+        
         
         return cell
     }

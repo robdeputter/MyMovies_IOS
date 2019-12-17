@@ -528,13 +528,13 @@
         <!--Watchlist-->
         <scene sceneID="QwC-UA-ZnO">
             <objects>
-                <tableViewController id="FRt-ab-99k" sceneMemberID="viewController">
+                <tableViewController id="FRt-ab-99k" customClass="WatchlistViewController" customModule="MyMovies" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="IhB-Y2-Iwx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Watchlist" rowHeight="121" id="auN-tg-54Q">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="WatchlistCell" rowHeight="121" id="auN-tg-54Q" customClass="MovieSerieDetailCell" customModule="MyMovies" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="121"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="auN-tg-54Q" id="V04-yU-CiS">
@@ -582,6 +582,10 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="poster" destination="hbW-mP-Axq" id="3dp-ZV-kex"/>
+                                    <outlet property="title" destination="uCK-0S-HUJ" id="tz6-Sk-Lrs"/>
+                                    <outlet property="type" destination="GEe-zE-Wcg" id="RuX-2R-XEw"/>
+                                    <outlet property="year" destination="eb2-zo-7js" id="aHC-PT-YNb"/>
                                     <segue destination="5He-cS-pAN" kind="show" identifier="WatchlistSegue" id="HxI-VB-gmb"/>
                                 </connections>
                             </tableViewCell>

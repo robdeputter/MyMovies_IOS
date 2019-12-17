@@ -9,10 +9,10 @@
 import Foundation
 
 class NewRelease : Decodable{
-    @objc dynamic var imdbID : String = ""
-    @objc dynamic var title : String = ""
-    @objc dynamic var released : String?
-    @objc dynamic var type: String?
+    var imdbID : String = ""
+    var title : String = ""
+    var released : String?
+    var type: String?
     var image : URL?
     
     enum CodingKeys : String, CodingKey{
@@ -22,8 +22,6 @@ class NewRelease : Decodable{
         case type
         case released
     }
-    
-
     
     required init(from decoder : Decoder) throws {
         let valueContainer = try decoder.container(keyedBy: CodingKeys.self)

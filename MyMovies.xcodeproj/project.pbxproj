@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0DDD53D552F25EAD4DBE60E9 /* Pods_MyMovies_MyMoviesUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 001636BAF8BBE49AA1429373 /* Pods_MyMovies_MyMoviesUITests.framework */; };
-		412CF3F023A85A95004F68F7 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412CF3EF23A85A95004F68F7 /* WatchlistViewController.swift */; };
+		412CF3F223A85B7C004F68F7 /* WatchlistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412CF3F123A85B7C004F68F7 /* WatchlistViewController.swift */; };
 		412D8C9223A7DE5A00F5ACC5 /* MovieSerieDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 412D8C9123A7DE5A00F5ACC5 /* MovieSerieDetailCell.swift */; };
 		41421F1A23A2D10B0080B0FB /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41421F1923A2D10B0080B0FB /* SearchViewController.swift */; };
 		41421F1C23A2D11A0080B0FB /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41421F1B23A2D11A0080B0FB /* FavoritesViewController.swift */; };
@@ -69,7 +69,7 @@
 		001636BAF8BBE49AA1429373 /* Pods_MyMovies_MyMoviesUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyMovies_MyMoviesUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		093225F1324CC89797CC2AC5 /* Pods-MyMovies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyMovies.release.xcconfig"; path = "Target Support Files/Pods-MyMovies/Pods-MyMovies.release.xcconfig"; sourceTree = "<group>"; };
 		1ED013A6F71C335E507B3792 /* Pods-MyMovies-MyMoviesUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyMovies-MyMoviesUITests.debug.xcconfig"; path = "Target Support Files/Pods-MyMovies-MyMoviesUITests/Pods-MyMovies-MyMoviesUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		412CF3EF23A85A95004F68F7 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
+		412CF3F123A85B7C004F68F7 /* WatchlistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewController.swift; sourceTree = "<group>"; };
 		412D8C9123A7DE5A00F5ACC5 /* MovieSerieDetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSerieDetailCell.swift; sourceTree = "<group>"; };
 		41421F1923A2D10B0080B0FB /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		41421F1B23A2D11A0080B0FB /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +149,7 @@
 				41421F1B23A2D11A0080B0FB /* FavoritesViewController.swift */,
 				41421F1D23A2D1550080B0FB /* NewReleasesViewController.swift */,
 				41421F1F23A2D1700080B0FB /* MovieSerieDetailViewController.swift */,
-				412CF3EF23A85A95004F68F7 /* WatchlistViewController.swift */,
+				412CF3F123A85B7C004F68F7 /* WatchlistViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -504,7 +504,7 @@
 				41639CCE239EBCB8001F2E96 /* SceneDelegate.swift in Sources */,
 				41639CFF239EBEC6001F2E96 /* MovieSerie.swift in Sources */,
 				41421F2423A2E60A0080B0FB /* MovieSerieResponse.swift in Sources */,
-				412CF3F023A85A95004F68F7 /* WatchlistViewController.swift in Sources */,
+				412CF3F223A85B7C004F68F7 /* WatchlistViewController.swift in Sources */,
 				41421F2623A2E9580080B0FB /* NewReleaseResponse.swift in Sources */,
 				41639D01239EBED3001F2E96 /* MovieSerieDetail.swift in Sources */,
 				41421F1E23A2D1550080B0FB /* NewReleasesViewController.swift in Sources */,
