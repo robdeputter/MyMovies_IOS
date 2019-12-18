@@ -90,7 +90,15 @@
             (data,response, error) in
             let jsonDecoder = JSONDecoder()
             if let data = data, let newReleaseResponse = try? jsonDecoder.decode(NewReleaseResponse.self, from: data){
-                completion(newReleaseResponse.items)
+                let allitems = newReleaseResponse.items
+                var itemsWithImdbID : [NewRelease] = []
+                
+                for item in allitems{
+                    if item.imdbID != ""{
+                        itemsWithImdbID.append(item)
+                    }
+                }
+                completion(itemsWithImdbID)
             }
             else{
                 completion(nil)

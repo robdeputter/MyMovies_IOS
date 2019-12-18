@@ -31,7 +31,7 @@ class FavoritesViewController: UITableViewController {
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "FavoriteSegue"{
+        if segue.identifier == "FavoriteSegue" {
             let movieSerieDetailViewController = segue.destination as! MovieSerieDetailViewController
             let index = tableView.indexPathForSelectedRow!.row
             movieSerieDetailViewController.movieSerieDetail = favorites[index]

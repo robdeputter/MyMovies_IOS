@@ -7,27 +7,37 @@
 //
 
 import UIKit
+import Reachability
 
 //SOURCE: https://www.raywenderlich.com/4363809-uisearchcontroller-tutorial-getting-started
+//reachability: https://www.youtube.com/watch?v=wDZmz9IsB-8
 /**
  This View will show an overview series and movies for a specific title (possible filters = year, type)
  */
 class SearchViewController: UITableViewController, UISearchResultsUpdating {
     
-    
-    
     var movieSeries : [MovieSerie] = []
+    let reachability = try! Reachability()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setSearchbarInNavbar()
         self.tableView.rowHeight = 114
+        
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
     }
     
     func setSearchbarInNavbar(){
@@ -43,10 +53,9 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    //DELEGATE PATTERN
     func updateSearchResults(for searchController: UISearchController) {
         if let inputText = searchController.searchBar.text{
-            
-            
             
             guard !inputText.isEmpty else{
                 self.movieSeries.removeAll()
@@ -77,7 +86,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
             let index = tableView.indexPathForSelectedRow!.row
             movieSerieDetailViewController.movieSerie = movieSeries[index]
         }
- 
+        
     }
     // MARK: - Table view data source
     
@@ -91,14 +100,25 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
         
         //if there are no movies or series to show ==> "No movies or series"
         //SOURCE: https://medium.com/@mtssonmez/handle-empty-tableview-in-swift-4-ios-11-23635d108409
-        
-        if movieSeries.count == 0{
-            self.tableView.setEmptyView(message: "No results")
+        self.tableView.setEmptyView(message: "No results")
+        reachability.whenReachable = {
+            reachability in
+            if self.movieSeries.count == 0{
+                DispatchQueue.main.async {
+                    self.tableView.setEmptyView(message: "No results")
+                }
+            }
+            else{
+                self.tableView.restore()
+            }
         }
-        else{
-            self.tableView.restore()
+        reachability.whenUnreachable = {
+            _ in
+            DispatchQueue.main.async {
+                self.tableView.setEmptyView(message: "No internet connection")
+            }
+            
         }
-        
         return movieSeries.count
     }
     
@@ -117,16 +137,13 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
                 }
             }
         }else{
-
             DispatchQueue.main.async {
                 cell.update(movieSerie: movieSerie, image: #imageLiteral(resourceName: "NoPhotoAvailable"))
             }
         }
-        
-        
         return cell
     }
-
+    
     
     
     /*

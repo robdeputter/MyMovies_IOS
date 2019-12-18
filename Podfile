@@ -9,6 +9,7 @@ target 'MyMovies' do
   # Pods for MyMovies
 	use_frameworks!
 	pod 'RealmSwift'
+	pod 'ReachabilitySwift'
 
   target 'MyMoviesTests' do
 	use_frameworks!
