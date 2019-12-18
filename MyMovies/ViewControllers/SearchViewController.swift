@@ -74,9 +74,7 @@ class SearchViewController: UITableViewController, UISearchResultsUpdating {
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-                
             }
-            
         }
     }
     

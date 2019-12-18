@@ -54,7 +54,6 @@ class MovieSerieDetailViewController: UIViewController {
     @IBOutlet var genreDetails: UILabel!
     
     //Ratingstars details
-    @IBOutlet weak var ratingDetailView: UIStackView!
     @IBOutlet weak var star1: UIImageView!
     @IBOutlet weak var star2: UIImageView!
     @IBOutlet weak var star3: UIImageView!
@@ -142,35 +141,31 @@ class MovieSerieDetailViewController: UIViewController {
     func updateRatingBar(rating : Int?){
         switch rating {
         case 1:
-            ratingDetailView.isHidden = false
             star1.image = UIImage(systemName: "star.fill")
             star2.image = UIImage(systemName: "star")
             star3.image = UIImage(systemName: "star")
             star4.image = UIImage(systemName: "star")
             star5.image = UIImage(systemName: "star")
         case 2:
-            ratingDetailView.isHidden = false
             star1.image = UIImage(systemName: "star.fill")
             star2.image = UIImage(systemName: "star.fill")
             star3.image = UIImage(systemName: "star")
             star4.image = UIImage(systemName: "star")
             star5.image = UIImage(systemName: "star")
         case 3:
-            ratingDetailView.isHidden = false
+            
             star1.image = UIImage(systemName: "star.fill")
             star2.image = UIImage(systemName: "star.fill")
             star3.image = UIImage(systemName: "star.fill")
             star4.image = UIImage(systemName: "star")
             star5.image = UIImage(systemName: "star")
         case 4:
-            ratingDetailView.isHidden = false
             star1.image = UIImage(systemName: "star.fill")
             star2.image = UIImage(systemName: "star.fill")
             star3.image = UIImage(systemName: "star.fill")
             star4.image = UIImage(systemName: "star.fill")
             star5.image = UIImage(systemName: "star")
         case 5:
-            ratingDetailView.isHidden = false
             star1.image = UIImage(systemName: "star.fill")
             star2.image = UIImage(systemName: "star.fill")
             star3.image = UIImage(systemName: "star.fill")
@@ -182,7 +177,6 @@ class MovieSerieDetailViewController: UIViewController {
             star3.image = UIImage(systemName: "star")
             star4.image = UIImage(systemName: "star")
             star5.image = UIImage(systemName: "star")
-            ratingDetailView.isHidden = true
         }
         
         
@@ -244,7 +238,7 @@ class MovieSerieDetailViewController: UIViewController {
                     else{
                         DispatchQueue.main.async {
                             self.favoritesButton.setImage(UIImage(systemName: "star"), for: .normal)
-                            self.ratingDetailView.isHidden = true
+                            self.updateRatingBar(rating: nil)
                         }
                     }
                 }
@@ -302,10 +296,10 @@ class MovieSerieDetailViewController: UIViewController {
                     //show error
                 }
                 else{
-                        self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
-                        self.ratingDetailView.isHidden = false
+                    self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
+                    
                     self.updateRatingBar(rating: self.rating)
-                        
+                    
                     
                     self.animateOut()
                     //reset the rating --> if the user removes the favorite and adds him back, the ratingbar has to be filled with empty stars
@@ -373,7 +367,7 @@ class MovieSerieDetailViewController: UIViewController {
                     guard let image = image else {return}
                     
                     DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                            self.updateRatingBar(rating: rating)
+                        self.updateRatingBar(rating: rating)
                     }
                     DispatchQueue.main.async {
                         self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
@@ -383,7 +377,7 @@ class MovieSerieDetailViewController: UIViewController {
                 }
             }else{
                 DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                        self.updateRatingBar(rating: rating)
+                    self.updateRatingBar(rating: rating)
                 }
                 DispatchQueue.main.async {
                     self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
@@ -405,7 +399,7 @@ class MovieSerieDetailViewController: UIViewController {
                     guard let image = image else {return}
                     
                     DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                            self.updateRatingBar(rating: rating)
+                        self.updateRatingBar(rating: rating)
                     }
                     DispatchQueue.main.async {
                         self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
@@ -415,7 +409,7 @@ class MovieSerieDetailViewController: UIViewController {
                 }
             }else{
                 DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                        self.updateRatingBar(rating: rating)
+                    self.updateRatingBar(rating: rating)
                 }
                 DispatchQueue.main.async {
                     self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
@@ -454,5 +448,5 @@ class MovieSerieDetailViewController: UIViewController {
         activityViewController.popoverPresentationController?.sourceView = self.view
         self.present(activityViewController,animated: true,completion: nil)
     }
-
+    
 }

@@ -610,15 +610,15 @@
                                     </connections>
                                 </button>
                             </barButtonItem>
-                            <barButtonItem image="barButtonItem:Byq-ac-rxB:image" catalog="system" style="plain" id="Byq-ac-rxB">
-                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="zdN-VP-TgW">
-                                    <rect key="frame" x="306" y="6" width="40" height="32"/>
+                            <barButtonItem image="barButtonItem:Byq-ac-rxB:image" style="plain" id="Byq-ac-rxB">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="zdN-VP-TgW">
+                                    <rect key="frame" x="282" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="40" id="7Jm-6D-djj"/>
                                         <constraint firstAttribute="height" constant="32" id="cWv-pH-K8N"/>
                                     </constraints>
-                                    <state key="normal" image="button:zdN-VP-TgW:image" catalog="system"/>
+                                    <state key="normal" image="button:zdN-VP-TgW:image"/>
                                     <connections>
                                         <action selector="watchlistButtonPressed:" destination="5He-cS-pAN" eventType="touchUpInside" id="dq6-bR-hEP"/>
                                     </connections>
@@ -640,7 +640,6 @@
                         <outlet property="imdbRatingDetails" destination="LPR-wQ-ZOq" id="zPI-ua-BvP"/>
                         <outlet property="plotDetails" destination="wCy-QB-anl" id="KzP-y6-aWv"/>
                         <outlet property="poster" destination="UgL-Bh-31g" id="rt2-7m-Z89"/>
-                        <outlet property="ratingDetailView" destination="4Sm-iR-wkG" id="8o1-8v-QxC"/>
                         <outlet property="ratingStar1" destination="YrY-h8-0JU" id="Ngc-zs-4cl"/>
                         <outlet property="ratingStar2" destination="dqG-kg-ag6" id="k7N-bm-djL"/>
                         <outlet property="ratingStar3" destination="iZa-0g-Lof" id="ALD-iN-E4M"/>
@@ -1263,7 +1262,7 @@
     </scenes>
     <resources>
         <image name="NoPhotoAvailable" width="1152" height="1440"/>
-        <image name="barButtonItem:Byq-ac-rxB:image" catalog="system" width="64" height="54">
+        <image name="barButtonItem:Byq-ac-rxB:image" width="64" height="54">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
 S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBELDBscIRkmKisyNThCSktPUlUkbnVsbNcNDg8QERITFBUW
@@ -1641,7 +1640,7 @@ RE5EWURiRHVEeUSERI1EkkSaRJ1EokSxRLVEwETIRNVE4kT3RPxFAEUCRQRFBkUPRRRFGkUiRSRFJkUo
 RSpWllabVqhWq1a4Vr1WxVbIVs1W1QAAAAAAAAIBAAAAAAAAAFUAAAAAAAAAAAAAAAAAAFbYA
 </mutableData>
         </image>
-        <image name="button:zdN-VP-TgW:image" catalog="system" width="64" height="54">
+        <image name="button:zdN-VP-TgW:image" width="64" height="54">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGBwpYJHZlcnNpb25ZJGFyY2hpdmVyVCR0b3BYJG9iamVjdHMSAAGGoF8QD05T
 S2V5ZWRBcmNoaXZlctEICVRyb290gAGvEBELDBscIRkmKisyNThCSktPUlUkbnVsbNcNDg8QERITFBUW
