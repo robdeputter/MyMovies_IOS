@@ -15,7 +15,7 @@ Furthermore, this app also offers the possibility to consult the latest releases
 If you like to let your friends know about a movie or series that you liked very much, you can share it through different platforms (mail, messages, messenger,...).
 
 ## Screenshots
-![Screenshot](./Screenshots/homescreen.PNG | width = 100)
+![Screenshot](./Screenshots/homescreen.PNG | width=100)
 
 ## External frameworks
 [Realm](https://realm.io) 
