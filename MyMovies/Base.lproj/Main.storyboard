@@ -624,6 +624,11 @@
                                     </connections>
                                 </button>
                             </barButtonItem>
+                            <barButtonItem image="square.and.arrow.up" catalog="system" id="rbg-Jg-DQf">
+                                <connections>
+                                    <action selector="shareButtonPressed:" destination="5He-cS-pAN" id="bHB-Jh-tYZ"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -644,6 +649,7 @@
                         <outlet property="ratingView" destination="czV-c5-cAi" id="Z12-jg-vnQ"/>
                         <outlet property="releasedDetails" destination="dJi-c7-5US" id="56b-gA-F5b"/>
                         <outlet property="saveRating" destination="VPp-SF-jyf" id="BbO-iO-YNb"/>
+                        <outlet property="shareButton" destination="rbg-Jg-DQf" id="hEg-Qd-COM"/>
                         <outlet property="star1" destination="Qok-Yd-14E" id="fcv-bY-sWs"/>
                         <outlet property="star2" destination="nD7-Rc-jgT" id="cP6-KM-jZM"/>
                         <outlet property="star3" destination="i1g-LC-JwP" id="Ep3-yr-agm"/>
@@ -758,14 +764,6 @@
                 </view>
             </objects>
             <point key="canvasLocation" x="2020.289855072464" y="431.25"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="cgy-hr-g5j">
-            <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="WY3-36-1so" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <viewController id="QFo-aU-pNG" sceneMemberID="viewController"/>
-            </objects>
-            <point key="canvasLocation" x="2900" y="415"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="CDO-os-cEQ">
@@ -2025,6 +2023,7 @@ RSpWllabVqhWq1a4Vr1WxVbIVs1W1QAAAAAAAAIBAAAAAAAAAFUAAAAAAAAAAAAAAAAAAFbYA
         <image name="house.fill" catalog="system" width="64" height="52"/>
         <image name="list.bullet" catalog="system" width="64" height="44"/>
         <image name="magnifyingglass" catalog="system" width="64" height="56"/>
+        <image name="square.and.arrow.up" catalog="system" width="56" height="64"/>
         <image name="star" catalog="system" width="64" height="58"/>
         <image name="star.fill" catalog="system" width="64" height="58"/>
         <image name="thibault-penin-3HInbCmQ8ro-unsplash" width="4016" height="6016"/>

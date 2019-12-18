@@ -15,6 +15,8 @@ class MovieSerieDetailViewController: UIViewController {
     var newRelease : NewRelease!
     
     var rating : Int?
+    //share
+    @IBOutlet weak var shareButton: UIBarButtonItem!
     
     //SOURCE pop-up: https://www.youtube.com/watch?v=CXvOS6hYADc
     //Pop-up view
@@ -441,4 +443,16 @@ class MovieSerieDetailViewController: UIViewController {
         }
     }
     
+    //book
+    @IBAction func shareButtonPressed(_ sender: Any) {
+        let image =  self.poster.image
+        
+        let text = "You should watch this \(self.movieSerieDetail.type): \(self.movieSerieDetail.title) \n\n" + (self.movieSerieDetail.plot ?? "")
+        
+        let shareItems = [image!, text] as [Any]
+        let activityViewController = UIActivityViewController(activityItems: shareItems,applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController,animated: true,completion: nil)
+    }
+
 }
