@@ -1,6 +1,12 @@
-Creator: Rob De Putter (HOGENT - Group: 3C)
+Rob De Putter (HOGENT - Group: 3C)
 
-# MyMovies - IOS application
+# MyMovies
+> IOS application
+
+[![Swift Version][swift-image]][swift-url]
+[![License][license-image]][license-url]
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZSwiftExtensions.svg)](https://img.shields.io/cocoapods/v/LFAlertController.svg)  
+[![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
 
 MyMovies is an application where you can look up all movies and series. You can request a detailed list to provide more information about a particular film or series.  There is also a possibility to add them to your watchlist or favorites. 
 
@@ -8,10 +14,18 @@ Furthermore, this app also offers the possibility to consult the latest releases
 
 If you like to let your friends know about a movie or series that you liked very much, you can share it through different platforms (mail, messages, messenger,...).
 
+## Screenshots
+![Screenshot](./Screenshots/homescreen.PNG)
+
 ## External frameworks
 [Realm](https://realm.io) 
 
-## Installing
+## Requirements
+
+- iOS 13.0+
+- Xcode 11.3
+
+## Installation
 ### 1. Clone this repository
 ```bash
 git clone https://github.com/robdeputter/MyMovies_IOS.git
@@ -21,3 +35,22 @@ git clone https://github.com/robdeputter/MyMovies_IOS.git
 ```bash
 $ pod install
 ```
+## Developer
+
+Rob De Putter – [LinkedIn](https://www.linkedin.com/feed/)
+
+Distributed under the MIT license. See ``LICENSE`` for more information.
+
+[https://github.com/robdeputter](https://github.com/robdeputter)
+
+[swift-image]:https://img.shields.io/badge/swift-5.0-orange.svg
+[swift-url]: https://swift.org/
+[license-image]: https://img.shields.io/badge/License-MIT-blue.svg
+[license-url]: LICENSE
+[travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
+[travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
+[codebeat-image]: https://codebeat.co/badges/c19b47ea-2f9d-45df-8458-b2d952fe9dad
+[codebeat-url]: https://codebeat.co/projects/github-com-vsouza-awesomeios-com.
+## Source README
+[README template](https://github.com/awesome-labs/iOS-readme-template/blob/master/README.md)
+
