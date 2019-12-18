@@ -72,85 +72,12 @@ class MovieSerieDetailViewController: UIViewController {
         self.showSpinner(onView: self.view)
         if movieSerieDetail == nil{
             guard let newRelease = self.newRelease else {
-                NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
-                    result in
-                    guard let movieSerieDetail = result else {return}
-                    
-                    
-                    self.movieSerieDetail = movieSerieDetail
-                    if(movieSerieDetail.posterString != "N/A"){
-                        NetworkController.shared.fetchImage(with: URL(string: movieSerieDetail.posterString)!){
-                            image in
-                            guard let image = image else {return}
-                            
-                            DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                                    self.updateRatingBar(rating: rating)
-                            }
-                            DispatchQueue.main.async {
-                                self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
-                                self.setUpButtons(imdbID: movieSerieDetail.imdbID)
-                                self.removeSpinner()
-                            }
-                        }
-                    }else{
-                        DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                                self.updateRatingBar(rating: rating)
-                        }
-                        DispatchQueue.main.async {
-                            self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
-                            self.setUpButtons(imdbID: movieSerieDetail.imdbID)
-                            self.removeSpinner()
-                        }
-                    }
-                    
-                }
+                fetchMovieSerie()
                 return
             }
-            NetworkController.shared.fetchMovieSerieDetail(with: newRelease.imdbID){
-                result in
-                guard let movieSerieDetail = result else {return}
-                
-                self.movieSerieDetail = movieSerieDetail
-                if(movieSerieDetail.posterString != "N/A"){
-                    NetworkController.shared.fetchImage(with: URL(string: movieSerieDetail.posterString)!){
-                        image in
-                        guard let image = image else {return}
-                        
-                        DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                                self.updateRatingBar(rating: rating)
-                        }
-                        DispatchQueue.main.async {
-                            self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
-                            self.setUpButtons(imdbID: movieSerieDetail.imdbID)
-                            self.removeSpinner()
-                        }
-                    }
-                }else{
-                    DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
-                            self.updateRatingBar(rating: rating)
-                    }
-                    DispatchQueue.main.async {
-                        self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
-                        self.setUpButtons(imdbID: movieSerieDetail.imdbID)
-                        self.removeSpinner()
-                    }
-                }
-            }
+            fetchNewRelease(newRelease: newRelease)
         }else{
-            DispatchQueue.main.async {
-                NetworkController.shared.fetchImage(with: URL(string: self.movieSerieDetail.posterString)!){
-                    image in
-                    guard let image = image else {return}
-                    
-                    
-                    DispatchQueue.main.async {
-                        self.updateUI(movieSerieDetail: self.movieSerieDetail , image: image)
-                        self.setUpButtons(imdbID: self.movieSerieDetail.imdbID)
-                        self.updateRatingBar(rating: self.movieSerieDetail.favoriteRating.value)
-                        self.removeSpinner()
-                    }
-                }
-            }
+            fetchMovieSerieDetail()
         }
     }
     
@@ -373,7 +300,6 @@ class MovieSerieDetailViewController: UIViewController {
                     //show error
                 }
                 else{
-                    
                         self.favoritesButton.setImage(UIImage(systemName: "star.fill"), for: .normal)
                         self.ratingDetailView.isHidden = false
                     self.updateRatingBar(rating: self.rating)
@@ -387,7 +313,6 @@ class MovieSerieDetailViewController: UIViewController {
         }
         
     }
-    
     
     @IBAction func ratingButtonPressed(_ sender: UIButton) {
         
@@ -434,6 +359,86 @@ class MovieSerieDetailViewController: UIViewController {
         }
     }
     
+    func fetchNewRelease(newRelease : NewRelease){
+        NetworkController.shared.fetchMovieSerieDetail(with: newRelease.imdbID){
+            result in
+            guard let movieSerieDetail = result else {return}
+            
+            self.movieSerieDetail = movieSerieDetail
+            if(movieSerieDetail.posterString != "N/A"){
+                NetworkController.shared.fetchImage(with: URL(string: movieSerieDetail.posterString)!){
+                    image in
+                    guard let image = image else {return}
+                    
+                    DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                            self.updateRatingBar(rating: rating)
+                    }
+                    DispatchQueue.main.async {
+                        self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                        self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                        self.removeSpinner()
+                    }
+                }
+            }else{
+                DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                        self.updateRatingBar(rating: rating)
+                }
+                DispatchQueue.main.async {
+                    self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
+                    self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                    self.removeSpinner()
+                }
+            }
+        }
+    }
     
+    func fetchMovieSerie(){
+        NetworkController.shared.fetchMovieSerieDetail(with: movieSerie.imdbID){
+            result in
+            guard let movieSerieDetail = result else {return}
+            self.movieSerieDetail = movieSerieDetail
+            if(movieSerieDetail.posterString != "N/A"){
+                NetworkController.shared.fetchImage(with: URL(string: movieSerieDetail.posterString)!){
+                    image in
+                    guard let image = image else {return}
+                    
+                    DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                            self.updateRatingBar(rating: rating)
+                    }
+                    DispatchQueue.main.async {
+                        self.updateUI(movieSerieDetail: movieSerieDetail , image: image)
+                        self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                        self.removeSpinner()
+                    }
+                }
+            }else{
+                DatabaseController.shared.getFavoritesRatingMovie(imdbId: movieSerieDetail.imdbID) { (rating) in
+                        self.updateRatingBar(rating: rating)
+                }
+                DispatchQueue.main.async {
+                    self.updateUI(movieSerieDetail: movieSerieDetail , image: #imageLiteral(resourceName: "NoPhotoAvailable"))
+                    self.setUpButtons(imdbID: movieSerieDetail.imdbID)
+                    self.removeSpinner()
+                }
+            }
+        }
+    }
+    
+    func fetchMovieSerieDetail(){
+        DispatchQueue.main.async {
+            NetworkController.shared.fetchImage(with: URL(string: self.movieSerieDetail.posterString)!){
+                image in
+                guard let image = image else {return}
+                
+                
+                DispatchQueue.main.async {
+                    self.updateUI(movieSerieDetail: self.movieSerieDetail , image: image)
+                    self.setUpButtons(imdbID: self.movieSerieDetail.imdbID)
+                    self.updateRatingBar(rating: self.movieSerieDetail.favoriteRating.value)
+                    self.removeSpinner()
+                }
+            }
+        }
+    }
     
 }
