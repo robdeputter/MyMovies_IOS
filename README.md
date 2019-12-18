@@ -15,8 +15,8 @@ If you like to let your friends know about a movie or series that you liked very
 ![Screenshot](./Screenshots/watchlistscreen.PNG) ![Screenshot](./Screenshots/newReleasessreen.PNG) ![Screenshot](./Screenshots/detailscreen.PNG) 
 
 ## External frameworks
-[Realm](https://realm.io) 
-
+1. [Realm](https://realm.io) 
+2. [ReachabilitySwift](https://github.com/ashleymills/Reachability.swift)
 ## Requirements
 
 - iOS 13.0+
