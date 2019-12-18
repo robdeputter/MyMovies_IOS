@@ -3,10 +3,6 @@ Rob De Putter (HOGENT - Group: 3C)
 # MyMovies
 > IOS application
 
-[![Swift Version][swift-image]][swift-url]
-[![License][license-image]][license-url]
-[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/EZSwiftExtensions.svg)](https://img.shields.io/cocoapods/v/LFAlertController.svg)  
-[![Platform](https://img.shields.io/cocoapods/p/LFAlertController.svg?style=flat)](http://cocoapods.org/pods/LFAlertController)
 
 MyMovies is an application where you can look up all movies and series. You can request a detailed list to provide more information about a particular film or series.  There is also a possibility to add them to your watchlist or favorites. 
 
@@ -15,7 +11,8 @@ Furthermore, this app also offers the possibility to consult the latest releases
 If you like to let your friends know about a movie or series that you liked very much, you can share it through different platforms (mail, messages, messenger,...).
 
 ## Screenshots
-![Screenshot](./Screenshots/homescreen.PNG | width=100)
+![Screenshot](./Screenshots/homescreen.PNG) ![Screenshot](./Screenshots/Searchscreen.PNG) ![Screenshot](./Screenshots/favoritesscreen.PNG) 
+![Screenshot](./Screenshots/watchlistscreen.PNG) ![Screenshot](./Screenshots/newReleasessreen.PNG) ![Screenshot](./Screenshots/detailscreen.PNG) 
 
 ## External frameworks
 [Realm](https://realm.io) 
