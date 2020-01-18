@@ -252,15 +252,6 @@
                                 </view>
                                 <blurEffect style="systemUltraThinMaterialDark"/>
                             </visualEffectView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wzh-mm-1Lm">
-                                <rect key="frame" x="0.0" y="-1" width="375" height="814"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="v8h-Vr-Umj">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="814"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <blurEffect style="dark"/>
-                            </visualEffectView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="OFe-94-gDF">
                                 <rect key="frame" x="10" y="98" width="355" height="621"/>
                                 <subviews>
@@ -512,6 +503,15 @@
                                 <variation key="heightClass=compact-widthClass=regular" axis="horizontal"/>
                                 <variation key="heightClass=regular-widthClass=compact" axis="vertical"/>
                             </stackView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wzh-mm-1Lm">
+                                <rect key="frame" x="0.0" y="-1" width="375" height="814"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="v8h-Vr-Umj">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="814"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="dark"/>
+                            </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
@@ -537,7 +537,7 @@
                             </barButtonItem>
                             <barButtonItem image="barButtonItem:Byq-ac-rxB:image" style="plain" id="Byq-ac-rxB">
                                 <button key="customView" opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" id="zdN-VP-TgW">
-                                    <rect key="frame" x="247" y="0.0" width="40" height="30"/>
+                                    <rect key="frame" x="247" y="0.0" width="64" height="44"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <state key="normal" image="button:zdN-VP-TgW:image"/>
