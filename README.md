@@ -1,4 +1,4 @@
-Rob De Putter (HOGENT - Group: 3C)
+Rob De Putter (HOGENT - Group: 3C) - Result: 18/20
 
 # MyMovies
 > IOS application
